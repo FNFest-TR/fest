@@ -4,6 +4,7 @@ import requests
 import json
 import time
 import re
+import hashlib
 
 # SSL uyarılarını gizle
 try:
@@ -12,7 +13,7 @@ try:
 except ImportError:
     pass
 
-# --- İLERLEME ÇUBUĞU FONKSİYONU ---
+# --- İLERLEME ÇUBUĞU ---
 def print_progress_bar (iteration, total, prefix = 'Progress:', suffix = 'Complete', decimals = 1, length = 100, fill = '█', printEnd = "\r"):
     percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / total))
     filledLength = int(length * iteration // total)
@@ -24,14 +25,15 @@ def print_progress_bar (iteration, total, prefix = 'Progress:', suffix = 'Comple
         sys.stdout.write('\n')
         sys.stdout.flush()
 
-# --- Ayarlar ---
+# --- AYARLAR ---
 EPIC_REFRESH_TOKEN = os.getenv('EPIC_REFRESH_TOKEN')
 EPIC_BASIC_AUTH = os.getenv('EPIC_BASIC_AUTH')
+# BURASI YENİ: Gizli Tuzlama Anahtarı
+HASH_SALT = os.getenv('HASH_SALT') 
 
-# --- Sabitler ---
 SONGS_API_URL = 'https://fortnitecontent-website-prod07.ol.epicgames.com/content/api/pages/fortnite-game/spark-tracks'
 SEASON = 12
-PAGES_TO_SCAN = 10 # Daha fazla veri yakalamak için artırıldı
+PAGES_TO_SCAN = 10 
 
 # --- Global Değişkenler ---
 session = requests.Session()
@@ -39,6 +41,25 @@ session.verify = False
 ACCESS_TOKEN = None
 ACCOUNT_ID = None
 TOKEN_EXPIRY_TIME = 0
+
+# --- YENİLENMİŞ GÜVENLİ ŞİFRELEME ---
+def hash_account_id(real_id):
+    """
+    ID'yi gizli anahtarla (SALT) birleştirip şifreler.
+    Böylece geri döndürülemez ve tahmin edilemez olur.
+    """
+    if not real_id: return None
+    
+    # Eğer Salt yoksa varsayılan bir şey kullan (Ama Secret eklemen önerilir)
+    salt = HASH_SALT if HASH_SALT else "VarsayilanTuz123" 
+    
+    # ID + GizliŞifre birleşimi
+    combined = real_id + salt
+    
+    # Şifrele
+    hashed = hashlib.sha256(combined.encode('utf-8')).hexdigest()
+    return hashed
+# ---------------------------------
 
 def refresh_token_if_needed():
     global ACCESS_TOKEN, ACCOUNT_ID, TOKEN_EXPIRY_TIME
@@ -83,10 +104,8 @@ def get_account_names(account_ids):
     try:
         if not refresh_token_if_needed(): return {}
         
-        # 100'lük paketler halinde sorgula
         for i in range(0, len(unique_ids), 100):
             batch_ids = unique_ids[i:i + 100]
-            
             for attempt in range(3):
                 try:
                     params = '&'.join([f'accountId={uid}' for uid in batch_ids])
@@ -110,16 +129,13 @@ def get_account_names(account_ids):
                         time.sleep(2 ** attempt * 2)
                     else:
                         break
-            
             if i + 100 < len(unique_ids): time.sleep(0.5)
-                
         return all_user_names
     except Exception as e:
         print(f" > Kullanıcı adı hatası: {e}")
         return {}
 
-def parse_entry(raw_entry, account_id):
-    """API verisini işler ve ID ile birlikte döndürür."""
+def parse_entry(raw_entry, hashed_id):
     best_score = -1
     best_run_stats = None
     for session_data in raw_entry.get("sessionHistory", []):
@@ -130,7 +146,7 @@ def parse_entry(raw_entry, account_id):
             best_run_stats = stats
     if best_run_stats:
         return {
-            "account_id": account_id, # ID'yi kaydetmek kritik!
+            "account_id": hashed_id,
             "accuracy": int(best_run_stats.get("ACCURACY", 0) / 10000),
             "score": best_run_stats.get("SCORE", 0),
             "difficulty": best_run_stats.get("DIFFICULTY"),
@@ -140,12 +156,10 @@ def parse_entry(raw_entry, account_id):
     return None
 
 def load_existing_data(file_path):
-    """Var olan JSON dosyasını okur ve ID bazlı bir sözlük döndürür."""
     if os.path.exists(file_path):
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
-                # Listeyi sözlüğe çeviriyoruz ki güncellemek kolay olsun: {'ID': {VERI}}
                 return { item['account_id']: item for item in data.get('entries', []) if 'account_id' in item }
         except:
             return {}
@@ -157,31 +171,25 @@ def main(instrument_to_scan, output_base_dir):
 
     season_number = SEASON
     total_songs = len(all_songs)
-    print(f"\n--- {instrument_to_scan} için {total_songs} şarkı taranacak (Sonsuz Kayıt Modu) ---")
+    print(f"\n--- {instrument_to_scan} için {total_songs} şarkı taranacak (SALT Korumalı) ---")
 
     for i, song in enumerate(all_songs):
         song_id = song.get('sn')
         event_id = song.get('su')
-
         if not event_id or not song_id: continue
 
         print(f"\n-> Şarkı {i+1}/{total_songs}: {song.get('tt')}")
 
-        # Klasör ve Dosya Yolu Ayarları
         dir_path = f"{output_base_dir}/leaderboards/season{season_number}/{song_id}"
         os.makedirs(dir_path, exist_ok=True)
         master_file_path = f"{dir_path}/{instrument_to_scan}.json"
 
-        # 1. ADIM: MEVCUT VERİYİ YÜKLE
         existing_data_map = load_existing_data(master_file_path)
-        initial_count = len(existing_data_map)
         new_entries_buffer = []
 
-        # 2. ADIM: YENİ VERİLERİ ÇEK
         for page_num in range(PAGES_TO_SCAN):
             try:
                 print_progress_bar(page_num + 1, PAGES_TO_SCAN, prefix = f"Sayfa {page_num + 1}:", length = 30)
-
                 if not refresh_token_if_needed(): break
 
                 season_str = f"season{season_number:03d}"
@@ -197,18 +205,21 @@ def main(instrument_to_scan, output_base_dir):
                 if not raw_entries: 
                     sys.stdout.write('\n'); break
                 
-                # İsimleri topluca al
-                acc_ids = [e['teamId'] for e in raw_entries]
-                names = get_account_names(acc_ids)
+                real_acc_ids = [e['teamId'] for e in raw_entries]
+                names = get_account_names(real_acc_ids)
 
                 for entry in raw_entries:
-                    acc_id = entry['teamId']
-                    parsed = parse_entry(entry, acc_id)
+                    real_id = entry['teamId']
+                    
+                    # ŞİFRELEME (SALT İLE)
+                    hashed_id = hash_account_id(real_id) 
+                    
+                    parsed = parse_entry(entry, hashed_id)
                     if parsed:
-                        parsed['userName'] = names.get(acc_id, 'Unknown')
+                        parsed['userName'] = names.get(real_id, 'Unknown')
                         new_entries_buffer.append(parsed)
                 
-                time.sleep(1) # API'yi yormamak için bekleme
+                time.sleep(1)
 
             except Exception as e:
                 sys.stdout.write('\n')
@@ -217,34 +228,24 @@ def main(instrument_to_scan, output_base_dir):
         
         sys.stdout.write('\n')
 
-        # 3. ADIM: BİRLEŞTİR VE GÜNCELLE
         updates = 0
         adds = 0
         
         for new_entry in new_entries_buffer:
-            acc_id = new_entry['account_id']
-            
-            if acc_id in existing_data_map:
-                # Kayıt zaten var
-                current_score = existing_data_map[acc_id]['score']
-                
-                # İsim değişmişse güncelle
-                if existing_data_map[acc_id]['userName'] != new_entry['userName']:
-                    existing_data_map[acc_id]['userName'] = new_entry['userName']
+            acc_id_hash = new_entry['account_id']
+            if acc_id_hash in existing_data_map:
+                current_score = existing_data_map[acc_id_hash]['score']
+                if existing_data_map[acc_id_hash]['userName'] != new_entry['userName']:
+                    existing_data_map[acc_id_hash]['userName'] = new_entry['userName']
                     updates += 1
-
-                # Skor daha yüksekse güncelle
                 if new_entry['score'] > current_score:
-                    existing_data_map[acc_id] = new_entry
+                    existing_data_map[acc_id_hash] = new_entry
                     updates += 1
             else:
-                # Yeni kayıt
-                existing_data_map[acc_id] = new_entry
+                existing_data_map[acc_id_hash] = new_entry
                 adds += 1
 
-        # 4. ADIM: SIRALA VE KAYDET
         final_list = list(existing_data_map.values())
-        # Skora göre büyükten küçüğe sırala
         final_list.sort(key=lambda x: x['score'], reverse=True)
 
         with open(master_file_path, 'w', encoding='utf-8') as f:
@@ -258,11 +259,8 @@ def main(instrument_to_scan, output_base_dir):
 if __name__ == "__main__":
     if not EPIC_REFRESH_TOKEN or not EPIC_BASIC_AUTH:
         print("[HATA] Gerekli secret'lar eksik."); sys.exit(1)
-
     if len(sys.argv) < 2:
         print("Kullanım: python actions.py [enstrüman_adı] [çıktı_klasörü]"); sys.exit(1)
-
     instrument = sys.argv[1]
     output_dir = sys.argv[2] if len(sys.argv) > 2 else "."
-    
     main(instrument, output_dir)
