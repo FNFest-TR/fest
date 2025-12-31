@@ -5,14 +5,35 @@ import json
 import time
 import re
 
-# --- AYARLAR ---
+# SSL uyarılarını gizle
+try:
+    from urllib3.exceptions import InsecureRequestWarning
+    requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+except ImportError:
+    pass
+
+# --- İLERLEME ÇUBUĞU FONKSİYONU ---
+def print_progress_bar (iteration, total, prefix = 'Progress:', suffix = 'Complete', decimals = 1, length = 100, fill = '█', printEnd = "\r"):
+    percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / total))
+    filledLength = int(length * iteration // total)
+    bar = fill * filledLength + '-' * (length - filledLength)
+    sys.stdout.write(f'\r{prefix} |{bar}| {percent}% {suffix}')
+    sys.stdout.flush()
+    if iteration == total: 
+        sys.stdout.write(printEnd)
+        sys.stdout.write('\n')
+        sys.stdout.flush()
+
+# --- Ayarlar ---
 EPIC_REFRESH_TOKEN = os.getenv('EPIC_REFRESH_TOKEN')
 EPIC_BASIC_AUTH = os.getenv('EPIC_BASIC_AUTH')
+
+# --- Sabitler ---
 SONGS_API_URL = 'https://fortnitecontent-website-prod07.ol.epicgames.com/content/api/pages/fortnite-game/spark-tracks'
 SEASON = 12
-PAGES_TO_SCAN = 10 
+PAGES_TO_SCAN = 10 # Daha fazla veri yakalamak için artırıldı
 
-# Global Değişkenler
+# --- Global Değişkenler ---
 session = requests.Session()
 session.verify = False
 ACCESS_TOKEN = None
@@ -22,7 +43,7 @@ TOKEN_EXPIRY_TIME = 0
 def refresh_token_if_needed():
     global ACCESS_TOKEN, ACCOUNT_ID, TOKEN_EXPIRY_TIME
     if time.time() > TOKEN_EXPIRY_TIME:
-        print("[AUTH] Token yenileniyor...")
+        print("\n[AUTH] Access token yenileniyor...")
         try:
             response = session.post(
                 'https://account-public-service-prod.ol.epicgames.com/account/api/oauth/token',
@@ -36,119 +57,147 @@ def refresh_token_if_needed():
             TOKEN_EXPIRY_TIME = time.time() + (token_data.get('expires_in', 7200) - 200)
             print("[AUTH] Token başarıyla yenilendi.")
             return True
-        except Exception as e:
-            print(f"[KRİTİK HATA] Token yenilenemedi! Lütfen Secret'ları güncelleyin. Hata: {e}")
+        except requests.exceptions.RequestException as e:
+            print(f"[HATA] Token yenilenemedi: {e.response.text if e.response else e}")
             return False
     return True
 
 def get_all_songs():
-    print("[BİLGİ] Şarkı listesi API'den çekiliyor...")
+    print("[BİLGİ] Tüm şarkıların listesi çekiliyor...")
     try:
         response = session.get(SONGS_API_URL, timeout=15)
         response.raise_for_status()
-        data = response.json()
-        tracks = [value['track'] for value in data.values() if isinstance(value, dict) and 'track' in value]
-        print(f"[BİLGİ] {len(tracks)} adet şarkı bulundu.")
-        return tracks
-    except Exception as e:
-        print(f"[KRİTİK HATA] Şarkı listesi alınamadı: {e}")
-        return []
+        all_tracks_data = response.json()
+        temp_tracks = [value['track'] for value in all_tracks_data.values() if isinstance(value, dict) and 'track' in value]
+        print(f"[BİLGİ] {len(temp_tracks)} şarkı bulundu.")
+        return temp_tracks
+    except requests.exceptions.RequestException as e:
+        print(f"[HATA] Şarkı listesi alınamadı: {e}")
+        return None
 
 def get_account_names(account_ids):
     if not account_ids: return {}
     unique_ids = list(set(account_ids))
     all_user_names = {}
     
-    if not refresh_token_if_needed(): 
-        return {}
-
     try:
+        if not refresh_token_if_needed(): return {}
+        
         # 100'lük paketler halinde sorgula
         for i in range(0, len(unique_ids), 100):
-            batch = unique_ids[i:i+100]
-            params = '&'.join([f'accountId={uid}' for uid in batch])
-            url = f'https://account-public-service-prod.ol.epicgames.com/account/api/public/account?{params}'
+            batch_ids = unique_ids[i:i + 100]
             
-            resp = session.get(url, headers={'Authorization': f'Bearer {ACCESS_TOKEN}'}, timeout=10)
-            if resp.status_code == 200:
-                for u in resp.json():
-                    all_user_names[u['id']] = u.get('displayName', 'Unknown')
-            time.sleep(0.2) # Rate limit önlemi
+            for attempt in range(3):
+                try:
+                    params = '&'.join([f'accountId={uid}' for uid in batch_ids])
+                    url = f'https://account-public-service-prod.ol.epicgames.com/account/api/public/account?{params}'
+                    headers = {'Authorization': f'Bearer {ACCESS_TOKEN}'}
+                    response = session.get(url, headers=headers, timeout=15)
+                    response.raise_for_status()
+                    
+                    for user in response.json():
+                        account_id = user.get('id')
+                        display_name = user.get('displayName')
+                        if not display_name and 'externalAuths' in user:
+                            for p_data in user['externalAuths'].values():
+                                if ext_name := p_data.get('externalDisplayName'):
+                                    display_name = f"[{p_data.get('type', 'platform').upper()}] {ext_name}"
+                                    break
+                        if account_id: all_user_names[account_id] = display_name or 'Bilinmeyen'
+                    break 
+                except requests.exceptions.HTTPError as e:
+                    if e.response.status_code == 429:
+                        time.sleep(2 ** attempt * 2)
+                    else:
+                        break
             
+            if i + 100 < len(unique_ids): time.sleep(0.5)
+                
         return all_user_names
     except Exception as e:
-        print(f"[UYARI] İsimler alınırken hata: {e}")
+        print(f" > Kullanıcı adı hatası: {e}")
         return {}
 
 def parse_entry(raw_entry, account_id):
+    """API verisini işler ve ID ile birlikte döndürür."""
     best_score = -1
-    best_run = None
-    for s in raw_entry.get("sessionHistory", []):
-        stats = s.get("trackedStats", {})
-        if stats.get("SCORE", 0) >= best_score:
-            best_score = stats.get("SCORE", 0)
-            best_run = stats
-    if best_run:
+    best_run_stats = None
+    for session_data in raw_entry.get("sessionHistory", []):
+        stats = session_data.get("trackedStats", {})
+        current_score = stats.get("SCORE", 0)
+        if current_score >= best_score:
+            best_score = current_score
+            best_run_stats = stats
+    if best_run_stats:
         return {
-            "account_id": account_id,
-            "accuracy": int(best_run.get("ACCURACY", 0) / 10000),
-            "score": best_run.get("SCORE", 0),
-            "difficulty": best_run.get("DIFFICULTY"),
-            "stars": best_run.get("STARS_EARNED"),
-            "fullcombo": best_run.get("FULL_COMBO") == 1
+            "account_id": account_id, # ID'yi kaydetmek kritik!
+            "accuracy": int(best_run_stats.get("ACCURACY", 0) / 10000),
+            "score": best_run_stats.get("SCORE", 0),
+            "difficulty": best_run_stats.get("DIFFICULTY"),
+            "stars": best_run_stats.get("STARS_EARNED"),
+            "fullcombo": best_run_stats.get("FULL_COMBO") == 1
         }
     return None
 
 def load_existing_data(file_path):
+    """Var olan JSON dosyasını okur ve ID bazlı bir sözlük döndürür."""
     if os.path.exists(file_path):
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
-                return { item['account_id']: item for item in data.get('entries', []) }
+                # Listeyi sözlüğe çeviriyoruz ki güncellemek kolay olsun: {'ID': {VERI}}
+                return { item['account_id']: item for item in data.get('entries', []) if 'account_id' in item }
         except:
             return {}
     return {}
 
 def main(instrument_to_scan, output_base_dir):
-    # Çıktı klasörünü en başta oluştur (Hata alsa bile klasör var olsun)
-    os.makedirs(f"{output_base_dir}/leaderboards", exist_ok=True)
-
     all_songs = get_all_songs()
-    if not all_songs:
-        print("[SONUÇ] Hiç şarkı bulunamadı veya API hatası.")
-        return
-    
-    print(f"--- {instrument_to_scan} Başlıyor ---")
+    if not all_songs: return
+
+    season_number = SEASON
+    total_songs = len(all_songs)
+    print(f"\n--- {instrument_to_scan} için {total_songs} şarkı taranacak (Sonsuz Kayıt Modu) ---")
 
     for i, song in enumerate(all_songs):
         song_id = song.get('sn')
         event_id = song.get('su')
+
         if not event_id or not song_id: continue
 
-        dir_path = f"{output_base_dir}/leaderboards/season{SEASON}/{song_id}"
-        os.makedirs(dir_path, exist_ok=True)
-        file_path = f"{dir_path}/{instrument_to_scan}.json"
+        print(f"\n-> Şarkı {i+1}/{total_songs}: {song.get('tt')}")
 
-        # 1. Mevcut veriyi yükle
-        existing_data_map = load_existing_data(file_path)
+        # Klasör ve Dosya Yolu Ayarları
+        dir_path = f"{output_base_dir}/leaderboards/season{season_number}/{song_id}"
+        os.makedirs(dir_path, exist_ok=True)
+        master_file_path = f"{dir_path}/{instrument_to_scan}.json"
+
+        # 1. ADIM: MEVCUT VERİYİ YÜKLE
+        existing_data_map = load_existing_data(master_file_path)
+        initial_count = len(existing_data_map)
         new_entries_buffer = []
-        
-        # 2. Yeni verileri çek
+
+        # 2. ADIM: YENİ VERİLERİ ÇEK
         for page_num in range(PAGES_TO_SCAN):
-            if not refresh_token_if_needed(): 
-                print("[HATA] Token geçersiz, döngü kırılıyor.")
-                break
-            
             try:
-                url = f"https://events-public-service-live.ol.epicgames.com/api/v1/leaderboards/FNFestival/season{SEASON:03d}_{event_id}/{event_id}_{instrument_to_scan}/{ACCOUNT_ID}?page={page_num}"
-                resp = session.get(url, headers={'Authorization': f'Bearer {ACCESS_TOKEN}'}, timeout=10)
+                print_progress_bar(page_num + 1, PAGES_TO_SCAN, prefix = f"Sayfa {page_num + 1}:", length = 30)
+
+                if not refresh_token_if_needed(): break
+
+                season_str = f"season{season_number:03d}"
+                url = f"https://events-public-service-live.ol.epicgames.com/api/v1/leaderboards/FNFestival/{season_str}_{event_id}/{event_id}_{instrument_to_scan}/{ACCOUNT_ID}?page={page_num}"
                 
-                if resp.status_code == 404: break
+                headers = {'Authorization': f'Bearer {ACCESS_TOKEN}'}
+                response = session.get(url, headers=headers, timeout=10)
+
+                if response.status_code == 404: 
+                    sys.stdout.write('\n'); break
                 
-                raw_entries = resp.json().get('entries', [])
-                if not raw_entries: break
+                raw_entries = response.json().get('entries', [])
+                if not raw_entries: 
+                    sys.stdout.write('\n'); break
                 
-                # İsimleri çek
+                # İsimleri topluca al
                 acc_ids = [e['teamId'] for e in raw_entries]
                 names = get_account_names(acc_ids)
 
@@ -159,31 +208,61 @@ def main(instrument_to_scan, output_base_dir):
                         parsed['userName'] = names.get(acc_id, 'Unknown')
                         new_entries_buffer.append(parsed)
                 
-                print(f"[{song_id}] Sayfa {page_num} okundu ({len(raw_entries)} kayıt)")
+                time.sleep(1) # API'yi yormamak için bekleme
 
             except Exception as e:
-                print(f"Sayfa hatası: {e}")
+                sys.stdout.write('\n')
+                print(f" > Sayfa hatası: {e}")
                 break
         
-        # 3. Birleştir ve Güncelle
+        sys.stdout.write('\n')
+
+        # 3. ADIM: BİRLEŞTİR VE GÜNCELLE
+        updates = 0
+        adds = 0
+        
         for new_entry in new_entries_buffer:
             acc_id = new_entry['account_id']
+            
             if acc_id in existing_data_map:
-                if new_entry['score'] > existing_data_map[acc_id]['score']:
+                # Kayıt zaten var
+                current_score = existing_data_map[acc_id]['score']
+                
+                # İsim değişmişse güncelle
+                if existing_data_map[acc_id]['userName'] != new_entry['userName']:
+                    existing_data_map[acc_id]['userName'] = new_entry['userName']
+                    updates += 1
+
+                # Skor daha yüksekse güncelle
+                if new_entry['score'] > current_score:
                     existing_data_map[acc_id] = new_entry
-                existing_data_map[acc_id]['userName'] = new_entry['userName']
+                    updates += 1
             else:
+                # Yeni kayıt
                 existing_data_map[acc_id] = new_entry
-        
-        # 4. Kaydet
+                adds += 1
+
+        # 4. ADIM: SIRALA VE KAYDET
         final_list = list(existing_data_map.values())
+        # Skora göre büyükten küçüğe sırala
         final_list.sort(key=lambda x: x['score'], reverse=True)
-        
-        with open(file_path, 'w', encoding='utf-8') as f:
+
+        with open(master_file_path, 'w', encoding='utf-8') as f:
             json.dump({'entries': final_list}, f, ensure_ascii=False, indent=4)
 
+        print(f"  > İşlem Tamam: Toplam {len(final_list)} kayıt. (+{adds} yeni, {updates} güncelleme)")
+        print() 
+
+    print(f"\n[BİTTİ] {instrument_to_scan} için tarama tamamlandı.")
+
 if __name__ == "__main__":
-    if len(sys.argv) < 2: sys.exit(1)
-    # Output dizini parametreden al veya varsayılan kullan
-    out_dir = sys.argv[2] if len(sys.argv) > 2 else "."
-    main(sys.argv[1], out_dir)
+    if not EPIC_REFRESH_TOKEN or not EPIC_BASIC_AUTH:
+        print("[HATA] Gerekli secret'lar eksik."); sys.exit(1)
+
+    if len(sys.argv) < 2:
+        print("Kullanım: python actions.py [enstrüman_adı] [çıktı_klasörü]"); sys.exit(1)
+
+    instrument = sys.argv[1]
+    output_dir = sys.argv[2] if len(sys.argv) > 2 else "."
+    
+    main(instrument, output_dir)
