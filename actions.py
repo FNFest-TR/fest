@@ -14,7 +14,8 @@ except ImportError:
     pass
 
 # --- İLERLEME ÇUBUĞU ---
-def print_progress_bar (iteration, total, prefix = 'Progress:', suffix = 'Complete', decimals = 1, length = 100, fill = '█', printEnd = "\r"):
+def print_progress_bar (iteration, total, prefix = 'Progress:', suffix = 'Complete', decimals = 1, length = 50, fill = '█', printEnd = "\r"):
+    if total == 0: total = 1
     percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / total))
     filledLength = int(length * iteration // total)
     bar = fill * filledLength + '-' * (length - filledLength)
@@ -28,7 +29,6 @@ def print_progress_bar (iteration, total, prefix = 'Progress:', suffix = 'Comple
 # --- AYARLAR ---
 EPIC_REFRESH_TOKEN = os.getenv('EPIC_REFRESH_TOKEN')
 EPIC_BASIC_AUTH = os.getenv('EPIC_BASIC_AUTH')
-# BURASI YENİ: Gizli Tuzlama Anahtarı
 HASH_SALT = os.getenv('HASH_SALT') 
 
 SONGS_API_URL = 'https://fortnitecontent-website-prod07.ol.epicgames.com/content/api/pages/fortnite-game/spark-tracks'
@@ -46,17 +46,10 @@ TOKEN_EXPIRY_TIME = 0
 def hash_account_id(real_id):
     """
     ID'yi gizli anahtarla (SALT) birleştirip şifreler.
-    Böylece geri döndürülemez ve tahmin edilemez olur.
     """
     if not real_id: return None
-    
-    # Eğer Salt yoksa varsayılan bir şey kullan (Ama Secret eklemen önerilir)
     salt = HASH_SALT if HASH_SALT else "VarsayilanTuz123" 
-    
-    # ID + GizliŞifre birleşimi
     combined = real_id + salt
-    
-    # Şifrele
     hashed = hashlib.sha256(combined.encode('utf-8')).hexdigest()
     return hashed
 # ---------------------------------
@@ -64,22 +57,22 @@ def hash_account_id(real_id):
 def refresh_token_if_needed():
     global ACCESS_TOKEN, ACCOUNT_ID, TOKEN_EXPIRY_TIME
     if time.time() > TOKEN_EXPIRY_TIME:
-        print("\n[AUTH] Access token yenileniyor...")
+        # print("\n[AUTH] Access token yenileniyor...")
         try:
             response = session.post(
                 'https://account-public-service-prod.ol.epicgames.com/account/api/oauth/token',
                 headers={'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': f'Basic {EPIC_BASIC_AUTH}'},
-                data={'grant_type': 'refresh_token', 'refresh_token': EPIC_REFRESH_TOKEN, 'token_type': 'eg1'}
+                data={'grant_type': 'refresh_token', 'refresh_token': EPIC_REFRESH_TOKEN, 'token_type': 'eg1'},
+                timeout=10
             )
             response.raise_for_status()
             token_data = response.json()
             ACCESS_TOKEN = token_data.get('access_token')
             ACCOUNT_ID = token_data.get('account_id')
             TOKEN_EXPIRY_TIME = time.time() + (token_data.get('expires_in', 7200) - 200)
-            print("[AUTH] Token başarıyla yenilendi.")
             return True
         except requests.exceptions.RequestException as e:
-            print(f"[HATA] Token yenilenemedi: {e.response.text if e.response else e}")
+            print(f"\n[HATA] Token yenilenemedi: {e}")
             return False
     return True
 
@@ -97,53 +90,85 @@ def get_all_songs():
         return None
 
 def get_account_names(account_ids):
+    """
+    İnatçı ve Güvenli İsim Çözücü.
+    Unknown sorununu çözmek için daha küçük gruplar ve retry mekanizması kullanır.
+    """
     if not account_ids: return {}
-    unique_ids = list(set(account_ids))
+    
+    # Sadece string olan ve boş olmayan ID'leri al
+    unique_ids = list(set([x for x in account_ids if x and isinstance(x, str)]))
     all_user_names = {}
+    
+    # 20'şerli gruplar halinde sor (Daha güvenli, 429 yemez)
+    chunk_size = 20
     
     try:
         if not refresh_token_if_needed(): return {}
         
-        for i in range(0, len(unique_ids), 100):
-            batch_ids = unique_ids[i:i + 100]
+        for i in range(0, len(unique_ids), chunk_size):
+            batch_ids = unique_ids[i:i + chunk_size]
+            
+            # Her grup için 3 deneme hakkı
             for attempt in range(3):
                 try:
                     params = '&'.join([f'accountId={uid}' for uid in batch_ids])
                     url = f'https://account-public-service-prod.ol.epicgames.com/account/api/public/account?{params}'
                     headers = {'Authorization': f'Bearer {ACCESS_TOKEN}'}
-                    response = session.get(url, headers=headers, timeout=15)
-                    response.raise_for_status()
                     
-                    for user in response.json():
-                        account_id = user.get('id')
-                        display_name = user.get('displayName')
-                        if not display_name and 'externalAuths' in user:
-                            for p_data in user['externalAuths'].values():
-                                if ext_name := p_data.get('externalDisplayName'):
-                                    display_name = f"[{p_data.get('type', 'platform').upper()}] {ext_name}"
-                                    break
-                        if account_id: all_user_names[account_id] = display_name or 'Bilinmeyen'
-                    break 
-                except requests.exceptions.HTTPError as e:
-                    if e.response.status_code == 429:
-                        time.sleep(2 ** attempt * 2)
+                    response = session.get(url, headers=headers, timeout=10)
+                    
+                    if response.status_code == 200:
+                        for user in response.json():
+                            account_id = user.get('id')
+                            display_name = user.get('displayName')
+                            
+                            # Platform ismini kontrol et (PSN, Xbox vs)
+                            if not display_name and 'externalAuths' in user:
+                                for p_data in user['externalAuths'].values():
+                                    if ext_name := p_data.get('externalDisplayName'):
+                                        display_name = f"[{p_data.get('type', 'platform').upper()}] {ext_name}"
+                                        break
+                            
+                            if account_id: 
+                                all_user_names[account_id] = display_name or 'Unknown'
+                        break # Başarılıysa döngüden çık
+                    
+                    elif response.status_code == 429: # Rate Limit
+                        time.sleep((attempt + 1) * 2) # Bekle ve tekrar dene
+                    
+                    elif response.status_code == 401: # Token süresi doldu
+                        refresh_token_if_needed()
+                    
                     else:
-                        break
-            if i + 100 < len(unique_ids): time.sleep(0.5)
+                        time.sleep(1)
+
+                except Exception:
+                    time.sleep(1)
+            
+            # API'yi boğmamak için minik bekleme
+            time.sleep(0.2)
+            
         return all_user_names
     except Exception as e:
-        print(f" > Kullanıcı adı hatası: {e}")
+        print(f" > İsim çözme hatası: {e}")
         return {}
 
 def parse_entry(raw_entry, hashed_id):
     best_score = -1
     best_run_stats = None
-    for session_data in raw_entry.get("sessionHistory", []):
+    
+    # Session geçmişini tara ve en iyi skoru bul
+    history = raw_entry.get("sessionHistory", [])
+    if not history: return None
+
+    for session_data in history:
         stats = session_data.get("trackedStats", {})
         current_score = stats.get("SCORE", 0)
         if current_score >= best_score:
             best_score = current_score
             best_run_stats = stats
+            
     if best_run_stats:
         return {
             "account_id": hashed_id,
@@ -187,6 +212,7 @@ def main(instrument_to_scan, output_base_dir):
         existing_data_map = load_existing_data(master_file_path)
         new_entries_buffer = []
 
+        # --- SAYFA TARAMA DÖNGÜSÜ ---
         for page_num in range(PAGES_TO_SCAN):
             try:
                 print_progress_bar(page_num + 1, PAGES_TO_SCAN, prefix = f"Sayfa {page_num + 1}:", length = 30)
@@ -205,21 +231,26 @@ def main(instrument_to_scan, output_base_dir):
                 if not raw_entries: 
                     sys.stdout.write('\n'); break
                 
-                real_acc_ids = [e['teamId'] for e in raw_entries]
+                # 1. ADIM: Önce Ham ID'leri topla ve isimleri bul
+                real_acc_ids = [e.get('teamId') for e in raw_entries if e.get('teamId')]
                 names = get_account_names(real_acc_ids)
 
+                # 2. ADIM: Veriyi İşle ve Şifrele
                 for entry in raw_entries:
-                    real_id = entry['teamId']
+                    real_id = entry.get('teamId')
+                    if not real_id: continue
                     
-                    # ŞİFRELEME (SALT İLE)
+                    # Şifrele (İsim bulduktan sonra)
                     hashed_id = hash_account_id(real_id) 
                     
                     parsed = parse_entry(entry, hashed_id)
                     if parsed:
+                        # Eğer isim bulunduysa al, yoksa 'Unknown' yaz
                         parsed['userName'] = names.get(real_id, 'Unknown')
                         new_entries_buffer.append(parsed)
                 
-                time.sleep(1)
+                # API'yi rahatlatmak için bekleme
+                time.sleep(0.5)
 
             except Exception as e:
                 sys.stdout.write('\n')
@@ -228,23 +259,39 @@ def main(instrument_to_scan, output_base_dir):
         
         sys.stdout.write('\n')
 
+        # --- MERGE (BİRLEŞTİRME) VE UNKNOWN KORUMASI ---
         updates = 0
         adds = 0
         
         for new_entry in new_entries_buffer:
             acc_id_hash = new_entry['account_id']
+            
             if acc_id_hash in existing_data_map:
-                current_score = existing_data_map[acc_id_hash]['score']
-                if existing_data_map[acc_id_hash]['userName'] != new_entry['userName']:
-                    existing_data_map[acc_id_hash]['userName'] = new_entry['userName']
-                    updates += 1
-                if new_entry['score'] > current_score:
-                    existing_data_map[acc_id_hash] = new_entry
+                old_entry = existing_data_map[acc_id_hash]
+                
+                # KURAL 1: İsim Güncelleme (Unknown Korumalı)
+                # Eğer yeni gelen isim 'Unknown' ise ve eskisi düzgünse, ESKİSİNİ KORU.
+                if new_entry['userName'] != "Unknown":
+                    if old_entry.get('userName') != new_entry['userName']:
+                        old_entry['userName'] = new_entry['userName']
+                        updates += 1
+                
+                # KURAL 2: Skor Güncelleme
+                if new_entry['score'] > old_entry['score']:
+                    # Skoru, yıldızı vs güncelle ama isme dikkat et
+                    temp_name = old_entry['userName'] # Mevcut ismi sakla
+                    existing_data_map[acc_id_hash] = new_entry # Yeniyi yaz
+                    
+                    # Eğer yeni veri Unknown geldiyse, eski ismi geri koy
+                    if new_entry['userName'] == "Unknown" and temp_name != "Unknown":
+                        existing_data_map[acc_id_hash]['userName'] = temp_name
+                        
                     updates += 1
             else:
                 existing_data_map[acc_id_hash] = new_entry
                 adds += 1
 
+        # Dosyaya Kaydet
         final_list = list(existing_data_map.values())
         final_list.sort(key=lambda x: x['score'], reverse=True)
 
@@ -258,9 +305,12 @@ def main(instrument_to_scan, output_base_dir):
 
 if __name__ == "__main__":
     if not EPIC_REFRESH_TOKEN or not EPIC_BASIC_AUTH:
-        print("[HATA] Gerekli secret'lar eksik."); sys.exit(1)
+        print("[HATA] Gerekli secret'lar eksik (EPIC_REFRESH_TOKEN, EPIC_BASIC_AUTH)."); sys.exit(1)
+    
     if len(sys.argv) < 2:
         print("Kullanım: python actions.py [enstrüman_adı] [çıktı_klasörü]"); sys.exit(1)
+    
     instrument = sys.argv[1]
     output_dir = sys.argv[2] if len(sys.argv) > 2 else "."
+    
     main(instrument, output_dir)
