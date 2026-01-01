@@ -13,8 +13,9 @@ KLASOR_YOLU = "leaderboards/season12"
 # Şifreleri GitHub Secrets'tan alacağız (Kodun içine yazma!)
 MY_REFRESH_TOKEN = os.environ.get("EPIC_REFRESH_TOKEN")
 # Secret yoksa hata verir ve durur (Daha güvenli yaklaşım)
-CLIENT_ID = os.environ["EPIC_CLIENT_ID"]
-CLIENT_SECRET = os.environ["EPIC_CLIENT_SECRET"]
+# Secret varsa onu kullanır, yoksa varsayılanı (Hata vermez)
+CLIENT_ID = os.environ.get("EPIC_CLIENT_ID", "ec684b8c687f479fadea3cb2ad83f5c6")
+CLIENT_SECRET = os.environ.get("EPIC_CLIENT_SECRET", "e1f31c211f28413186262d37a13fc84d")
 # ==========================================
 
 def get_access_token():
