@@ -1,0 +1,45 @@
+name: Repair Unknown Users
+
+on:
+  workflow_dispatch:  # Bu satır sayesinde butona basarak elle çalıştırabilirsin
+
+jobs:
+  fix-unknowns:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Repoya değişiklikleri kaydetmek (Commit) için izin
+
+    steps:
+    - name: Depoyu Çek (Checkout)
+      uses: actions/checkout@v4
+
+    - name: Python Kurulumu
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Kütüphaneleri Yükle
+      run: |
+        pip install requests
+
+    - name: Tamir Scriptini Çalıştır
+      env:
+        # Token'ı GitHub Secrets'tan alıp Python'a veriyoruz
+        EPIC_REFRESH_TOKEN: ${{ secrets.EPIC_REFRESH_TOKEN }}
+        # Eğer client id/secret'ı da secret yaptıysan buraya ekle, yapmadıysan Python kodu varsayılanı kullanır.
+      run: python repair.py
+
+    - name: Değişiklikleri Kaydet ve Gönder (Commit & Push)
+      run: |
+        git config --global user.name "GitHub Action Bot"
+        git config --global user.email "action@github.com"
+        
+        # Değişiklik var mı kontrol et
+        if [[ `git status --porcelain` ]]; then
+          git add leaderboards/
+          git commit -m "🔧 Unknown kullanıcılar düzeltildi (Auto-Repair)"
+          git push
+          echo "✅ Değişiklikler repoya gönderildi."
+        else
+          echo "✨ Hiçbir değişiklik yok, her şey temiz."
+        fi
