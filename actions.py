@@ -33,7 +33,7 @@ EPIC_BASIC_AUTH = os.getenv('EPIC_BASIC_AUTH')
 # --- Sabitler ---
 SONGS_API_URL = 'https://fortnitecontent-website-prod07.ol.epicgames.com/content/api/pages/fortnite-game/spark-tracks'
 SEASON = 12
-PAGES_TO_SCAN = 30  # 30 Sayfa = 3000 Kişi
+PAGES_TO_SCAN = 7  # 7 Sayfa = 7000 Kişi
 
 # --- Global Değişkenler ---
 session = requests.Session()
