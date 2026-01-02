@@ -100,7 +100,7 @@ def get_account_names(account_ids):
 
         for i in range(0, len(unique_ids), 100):
             batch_ids = unique_ids[i:i + 100]
-            
+
             response = None
             for attempt in range(max_retries):
                 try:
@@ -129,7 +129,7 @@ def get_account_names(account_ids):
                             display_name = f"[{p_data.get('type', 'platform').upper()}] {ext_name}"
                             break
                 if account_id: all_user_names[account_id] = display_name or 'Bilinmeyen'
-                
+
             if i + 100 < len(unique_ids):
                 time.sleep(1) 
 
@@ -151,7 +151,6 @@ def parse_entry(raw_entry):
             best_run_stats = stats
     if best_run_stats:
         return {
-
             "accuracy": int(best_run_stats.get("ACCURACY", 0) / 10000),
             "score": best_run_stats.get("SCORE", 0),
             "difficulty": best_run_stats.get("DIFFICULTY"),
@@ -211,24 +210,11 @@ def main(instrument_to_scan, output_base_dir):
                 user_names = get_account_names(account_ids) 
 
                 parsed_data = {'entries': []}
-
-
                 for entry in raw_entries:
                     parsed_entry = parse_entry(entry)
                     if parsed_entry: # Sadece geçerli parsed_entry varsa ekle
                         parsed_entry['userName'] = user_names.get(entry['teamId'])
                         parsed_data['entries'].append(parsed_entry)
-
-
-
-
-
-
-
-
-
-
-
 
                 file_path = f"{dir_path}/{instrument_to_scan}_{page_num}.json"
                 with open(file_path, 'w', encoding='utf-8') as f:
@@ -236,7 +222,7 @@ def main(instrument_to_scan, output_base_dir):
 
                 sys.stdout.write('\n')
                 print(f"  > Sayfa {page_num+1} -> {file_path} dosyasına kaydedildi.")
-                
+
                 time.sleep(2) 
 
             except Exception as e:
@@ -260,5 +246,5 @@ if __name__ == "__main__":
     # Eğer ikinci argüman (çıktı klasörü) verilmişse onu kullan, 
     # verilmemişse (örneğin yerel test için) mevcut klasörü (.) kullan.
     output_dir = sys.argv[2] if len(sys.argv) > 2 else "."
-    
+
     main(instrument, output_dir)
