@@ -1,38 +1,21 @@
 # 🎸 Fortnite Festival Leaderboard System
 
 ![Python](https://img.shields.io/badge/Python-3.10-blue?style=flat&logo=python)
-![PHP](https://img.shields.io/badge/PHP-8.x-purple?style=flat&logo=php)
 ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-Automated-green?style=flat&logo=github-actions)
+![Data](https://img.shields.io/badge/Data-JSON-orange?style=flat&logo=json)
 
-**FNFest Rank System**, Fortnite Festival modu için geliştirilmiş otomatik bir liderlik tablosu takip ve görüntüleme sistemidir. Epic Games API'sini kullanarak verileri çeker, arşivler ve modern bir web arayüzünde sunar.
+**FNFest Rank System**, Fortnite Festival modu için geliştirilmiş, Epic Games API'sini kullanarak küresel liderlik tablolarını (Leaderboards) otomatik olarak takip eden, arşivleyen ve açık veri formatında sunan bir veri sistemidir.
 
-## 🌟 Özellikler / Features
+## 🌟 Sistem Özellikleri / System Features
 
-* **🔄 Otomatik Veri Çekme:** GitHub Actions sayesinde her gün belirli aralıklarla API'den güncel skorları çeker.
-* **📂 JSON Tabanlı Veritabanı:** Veriler SQL gerektirmeden, optimize edilmiş parçalı JSON dosyaları (`_0.json`, `_1.json`...) olarak saklanır.
-* **⚡ Performanslı Web Arayüzü:**
-    * **Lazy Loading:** Sayfalar sadece ihtiyaç duyulduğunda yüklenir ("Daha Fazla Göster").
-    * **Deep Search:** Kullanıcı arama yapıldığında tüm veritabanı (henüz yüklenmemiş sayfalar dahil) arka planda taranır.
-    * **Responsive Tasarım:** Mobil ve masaüstü uyumlu modern arayüz.
-* **🌍 Çoklu Dil Desteği:** Türkçe ve İngilizce (TR/EN) dil seçenekleri.
-* **📊 Detaylı İstatistikler:** Skor, Doğruluk (Accuracy), Yıldızlar, Zorluk Seviyesi ve Full Combo (FC) takibi.
-
-## 🛠️ Kurulum / Setup
-
-### 1. Gereksinimler
-* Python 3.10+
-* PHP destekli bir web sunucusu (Apache/Nginx) veya GitHub Pages (Statik mod için düzenleme gerekir).
-
-### 2. GitHub Actions Kurulumu (Scraper)
-Bu repoyu fork ederseniz, Scraper'ın çalışması için aşağıdaki **Secret** anahtarlarını GitHub repo ayarlarınıza (`Settings > Secrets and variables > Actions`) eklemeniz gerekir:
-
-* `EPIC_REFRESH_TOKEN`: Epic Games hesabınıza ait yenileme jetonu.
-* `EPIC_BASIC_AUTH`: Epic Games istemci kimlik doğrulama anahtarı.
-
-### 3. Yerel Çalıştırma (Local)
-Web arayüzünü yerel makinenizde test etmek için:
-1.  Bir PHP sunucusu başlatın: `php -S localhost:8000`
-2.  Tarayıcıda `http://localhost:8000` adresine gidin.
+* **🔄 Otomatik Veri Döngüsü:** GitHub Actions altyapısı sayesinde sistem, belirlenen periyotlarla Epic Games sunucularına bağlanır ve en güncel skor verilerini çeker.
+* **📂 JSON Tabanlı Veritabanı:** Veriler karmaşık SQL yapıları yerine, geliştiricilerin kolayca işleyebileceği optimize edilmiş, sayfalanmış JSON dosyaları (`_0.json`, `_1.json`...) halinde saklanır.
+* **📊 Derinlemesine İstatistikler:**
+    * **Skor & Sıralama:** Oyuncunun küresel sıralaması ve toplam puanı.
+    * **Performans Verileri:** Doğruluk oranı (Accuracy), Kazanılan Yıldızlar ve Zorluk Seviyesi.
+    * **Full Combo (FC):** Kusursuz çalma durumunun tespiti.
+    * **Oturum Geçmişi:** `best_run` verilerinin yanı sıra detaylı maç istatistikleri.
+* **🛡️ Güvenli Mimari:** Hassas API anahtarları ve Token'lar kaynak koddan tamamen izole edilmiştir.
 
 ---
 
@@ -82,7 +65,7 @@ Birlikte harika şeyler geliştirelim! 🚀
 
 ---
 
-## 📜 License & Credits
+## 📜 Credits
 
 * **Developer:** Onur Ekici
 * **Support:** Developed with the assistance of Google Gemini.
