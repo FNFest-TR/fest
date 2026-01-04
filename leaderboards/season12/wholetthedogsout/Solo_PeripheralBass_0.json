@@ -6,11 +6,11 @@
             "userName": "Kattanaita",
             "best_run": {
                 "accuracy": 100,
-                "score": 98914,
+                "score": 99898,
                 "difficulty": 3,
                 "instrument": 5,
                 "stars": 6,
-                "fullcombo": false
+                "fullcombo": true
             },
             "sessions": [
                 {
@@ -47,6 +47,40 @@
                             {
                                 "accuracy": 100,
                                 "score": 90858,
+                                "difficulty": 3,
+                                "instrument": 5,
+                                "fullcombo": false,
+                                "stars": 6,
+                                "is_valid_entry": true
+                            }
+                        ]
+                    }
+                },
+                {
+                    "time": 1764766427.064,
+                    "valid": {
+                        "accuracy": 100,
+                        "score": 98914,
+                        "difficulty": 3,
+                        "instrument": 5,
+                        "stars": 6,
+                        "fullcombo": false
+                    },
+                    "stats": {
+                        "band": {
+                            "accuracy": 100,
+                            "fullcombo": false,
+                            "stars": 5,
+                            "scores": {
+                                "overdrive_bonus": 0,
+                                "base_score": 98914,
+                                "total": 98914
+                            }
+                        },
+                        "players": [
+                            {
+                                "accuracy": 100,
+                                "score": 98914,
                                 "difficulty": 3,
                                 "instrument": 5,
                                 "fullcombo": false,
@@ -134,33 +168,42 @@
                     }
                 },
                 {
-                    "time": 1764766427.064,
+                    "time": 1767459543.922,
                     "valid": {
                         "accuracy": 100,
-                        "score": 98914,
+                        "score": 99898,
                         "difficulty": 3,
                         "instrument": 5,
                         "stars": 6,
-                        "fullcombo": false
+                        "fullcombo": true
                     },
                     "stats": {
                         "band": {
                             "accuracy": 100,
-                            "fullcombo": false,
-                            "stars": 5,
+                            "fullcombo": true,
+                            "stars": 6,
                             "scores": {
-                                "overdrive_bonus": 0,
-                                "base_score": 98914,
-                                "total": 98914
+                                "overdrive_bonus": 40497,
+                                "base_score": 160379,
+                                "total": 213930
                             }
                         },
                         "players": [
                             {
                                 "accuracy": 100,
-                                "score": 98914,
+                                "score": 60480,
+                                "difficulty": 1,
+                                "instrument": 1,
+                                "fullcombo": true,
+                                "stars": 5,
+                                "is_valid_entry": false
+                            },
+                            {
+                                "accuracy": 100,
+                                "score": 99898,
                                 "difficulty": 3,
                                 "instrument": 5,
-                                "fullcombo": false,
+                                "fullcombo": true,
                                 "stars": 6,
                                 "is_valid_entry": true
                             }

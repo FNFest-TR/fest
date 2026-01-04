@@ -3255,6 +3255,58 @@
             },
             "sessions": [
                 {
+                    "time": 1767488230.943,
+                    "valid": {
+                        "accuracy": 99,
+                        "score": 213744,
+                        "difficulty": 3,
+                        "instrument": 3,
+                        "stars": 6,
+                        "fullcombo": false
+                    },
+                    "stats": {
+                        "band": {
+                            "accuracy": 98,
+                            "fullcombo": false,
+                            "stars": 6,
+                            "scores": {
+                                "overdrive_bonus": 294576,
+                                "base_score": 670469,
+                                "total": 1020383
+                            }
+                        },
+                        "players": [
+                            {
+                                "accuracy": 99,
+                                "score": 213744,
+                                "difficulty": 3,
+                                "instrument": 3,
+                                "fullcombo": false,
+                                "stars": 6,
+                                "is_valid_entry": true
+                            },
+                            {
+                                "accuracy": 99,
+                                "score": 253031,
+                                "difficulty": 3,
+                                "instrument": 0,
+                                "fullcombo": false,
+                                "stars": 6,
+                                "is_valid_entry": false
+                            },
+                            {
+                                "accuracy": 98,
+                                "score": 203693,
+                                "difficulty": 3,
+                                "instrument": 0,
+                                "fullcombo": false,
+                                "stars": 5,
+                                "is_valid_entry": false
+                            }
+                        ]
+                    }
+                },
+                {
                     "time": 1765746306.288,
                     "valid": {
                         "accuracy": 100,
@@ -6276,7 +6328,7 @@
         {
             "rank": 183,
             "teamId": "ebfb1cbf2eae434f906bdf9d3bb0ccac",
-            "userName": "Fenboye",
+            "userName": "Fen-.",
             "best_run": {
                 "accuracy": 100,
                 "score": 217788,
