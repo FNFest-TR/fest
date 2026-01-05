@@ -2724,6 +2724,49 @@
             },
             "sessions": [
                 {
+                    "time": 1767512448.1,
+                    "valid": {
+                        "accuracy": 99,
+                        "score": 261192,
+                        "difficulty": 3,
+                        "instrument": 3,
+                        "stars": 6,
+                        "fullcombo": false
+                    },
+                    "stats": {
+                        "band": {
+                            "accuracy": 99,
+                            "fullcombo": false,
+                            "stars": 5,
+                            "scores": {
+                                "overdrive_bonus": 112128,
+                                "base_score": 507483,
+                                "total": 659194
+                            }
+                        },
+                        "players": [
+                            {
+                                "accuracy": 100,
+                                "score": 244596,
+                                "difficulty": 3,
+                                "instrument": 0,
+                                "fullcombo": true,
+                                "stars": 6,
+                                "is_valid_entry": false
+                            },
+                            {
+                                "accuracy": 99,
+                                "score": 261192,
+                                "difficulty": 3,
+                                "instrument": 3,
+                                "fullcombo": false,
+                                "stars": 6,
+                                "is_valid_entry": true
+                            }
+                        ]
+                    }
+                },
+                {
                     "time": 1765182383.229,
                     "valid": {
                         "accuracy": 100,
@@ -4486,7 +4529,7 @@
         {
             "rank": 66,
             "teamId": "7b55dcedb09048d6b3103f4470b8af2c",
-            "userName": "SnowyHtx",
+            "userName": "twitch snowyhtx",
             "best_run": {
                 "accuracy": 100,
                 "score": 265752,
