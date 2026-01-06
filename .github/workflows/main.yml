@@ -6,10 +6,15 @@ on:
     - cron: '0 0 * * *'
 
 jobs:
-  # 1. AŞAMA: HER ENSTRÜMAN İÇİN VERİLERİ PARALEL ÇEK VE ARŞİVLE
+  # 1. AŞAMA: HER ENSTRÜMAN İÇİN VERİLERİ SIRAYLA ÇEK VE ARŞİVLE
   scrape:
     runs-on: ubuntu-latest
     strategy:
+      # --- DEĞİŞİKLİK BURADA ---
+      # Bu ayar, işlerin aynı anda değil, tek tek (sırayla) çalışmasını sağlar.
+      # Böylece Epic Games sunucusuna aynı anda 6 farklı koldan saldırıp banlanmazsın.
+      max-parallel: 1 
+      # -------------------------
       matrix:
         instrument:
           - 'Solo_Guitar'
