@@ -6,15 +6,12 @@ on:
     - cron: '0 0 * * *'
 
 jobs:
-  # 1. AŞAMA: HER ENSTRÜMAN İÇİN VERİLERİ SIRAYLA ÇEK VE ARŞİVLE
+  # 1. AŞAMA: HER ENSTRÜMANI TEK TEK ÇEK (SCRAPE)
   scrape:
     runs-on: ubuntu-latest
     strategy:
-      # --- DEĞİŞİKLİK BURADA ---
-      # Bu ayar, işlerin aynı anda değil, tek tek (sırayla) çalışmasını sağlar.
-      # Böylece Epic Games sunucusuna aynı anda 6 farklı koldan saldırıp banlanmazsın.
-      max-parallel: 1 
-      # -------------------------
+      # ÖNEMLİ: İşleri aynı anda değil, sırayla yapar (Rate Limit yememek için)
+      max-parallel: 1
       matrix:
         instrument:
           - 'Solo_Guitar'
@@ -26,8 +23,14 @@ jobs:
       fail-fast: false
 
     steps:
-      - name: Checkout repository
+      # OPTİMİZASYON: "Checkout" adımını hızlandırmak için sadece "actions.py" dosyasını indiriyoruz.
+      # Binlerce JSON dosyasını indirmediği için işlem saniyeler sürer ve donmaz.
+      - name: Checkout repository (Sparse)
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            actions.py
+          sparse-checkout-cone-mode: false
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -37,25 +40,25 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
-      # Her iş için temiz bir çıktı klasörü oluşturuyoruz
+      # Temiz bir çıktı klasörü oluştur
       - name: Create output directory
         run: mkdir ./output
 
+      # Python scriptini çalıştır
       - name: Run Scraper for ${{ matrix.instrument }}
         env:
           EPIC_REFRESH_TOKEN: ${{ secrets.EPIC_REFRESH_TOKEN }}
           EPIC_BASIC_AUTH: ${{ secrets.EPIC_BASIC_AUTH }}
-        # Script'e çıktıları ./output klasörüne yazmasını söylüyoruz
         run: python actions.py ${{ matrix.instrument }} ./output
 
-      # Sadece oluşturulan dosyaları içeren temiz klasörü artifact olarak yüklüyoruz
+      # Oluşan dosyaları geçici olarak yükle
       - name: Upload leaderboards artifact
         uses: actions/upload-artifact@v4
         with:
           name: leaderboards-${{ matrix.instrument }}
           path: ./output/leaderboards/
 
-  # 2. AŞAMA: TÜM TARAMA BİTTİKTEN SONRA DOSYALARI KAYDET
+  # 2. AŞAMA: TÜM DOSYALARI BİRLEŞTİR VE ÜZERİNE YAZ (COMMIT)
   commit-files:
     needs: scrape
     runs-on: ubuntu-latest
@@ -63,21 +66,22 @@ jobs:
       contents: write
 
     steps:
-      - name: Checkout repository
+      # Burada tüm repoyu indiriyoruz çünkü değişiklikleri işleyip commit atacağız
+      - name: Checkout repository (Full)
         uses: actions/checkout@v4
 
-      # Tüm artifact'leri indir ve birleştir. Bu işlem, mevcut leaderboards klasörünün üzerine
-      # hem güncel verileri yazar hem de yeni şarkıların klasörlerini ekler.
+      # Önceki aşamada üretilen tüm taze dosyaları indir.
+      # Mevcut "leaderboards" klasörünün içine, eski dosyaların ÜZERİNE yazar.
       - name: Download all leaderboards artifacts
         uses: actions/download-artifact@v4
         with:
           pattern: leaderboards-*
           merge-multiple: true
-          path: leaderboards/ # İndirilen dosyaları doğrudan leaderboards klasörüne çıkar
+          path: leaderboards/
 
+      # Değişiklikleri Git'e kaydet ve gönder
       - name: Commit and push if changed
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Data: Update all leaderboards"
-          # leaderboards klasöründeki tüm değişiklikleri (yeni/güncel) yakala
+          commit_message: "Data: Leaderboard update (Overwrite)"
           file_pattern: leaderboards
