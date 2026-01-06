@@ -3556,73 +3556,15 @@
         },
         {
             "rank": 56,
-            "teamId": "b3b7c62e6a4f40f489b20005af6a7ba1",
-            "userName": "Derieri Z1",
-            "best_run": {
-                "accuracy": 100,
-                "score": 260173,
-                "difficulty": 3,
-                "instrument": 1,
-                "stars": 6,
-                "fullcombo": true
-            },
-            "sessions": [
-                {
-                    "time": 1764908076.77,
-                    "valid": {
-                        "accuracy": 100,
-                        "score": 260173,
-                        "difficulty": 3,
-                        "instrument": 1,
-                        "stars": 6,
-                        "fullcombo": true
-                    },
-                    "stats": {
-                        "band": {
-                            "accuracy": 100,
-                            "fullcombo": true,
-                            "stars": 6,
-                            "scores": {
-                                "overdrive_bonus": 150681,
-                                "base_score": 508487,
-                                "total": 659168
-                            }
-                        },
-                        "players": [
-                            {
-                                "accuracy": 100,
-                                "score": 260173,
-                                "difficulty": 3,
-                                "instrument": 1,
-                                "fullcombo": true,
-                                "stars": 6,
-                                "is_valid_entry": true
-                            },
-                            {
-                                "accuracy": 100,
-                                "score": 248314,
-                                "difficulty": 3,
-                                "instrument": 1,
-                                "fullcombo": true,
-                                "stars": 6,
-                                "is_valid_entry": false
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        {
-            "rank": 57,
             "teamId": "73d2feced4794d969cecac49c90887a2",
             "userName": "cloudkitichu",
             "best_run": {
                 "accuracy": 100,
-                "score": 260112,
+                "score": 260215,
                 "difficulty": 3,
                 "instrument": 1,
                 "stars": 6,
-                "fullcombo": true
+                "fullcombo": false
             },
             "sessions": [
                 {
@@ -3681,6 +3623,107 @@
                                 "instrument": 1,
                                 "fullcombo": false,
                                 "stars": 4,
+                                "is_valid_entry": false
+                            }
+                        ]
+                    }
+                },
+                {
+                    "time": 1767585160.722,
+                    "valid": {
+                        "accuracy": 100,
+                        "score": 260215,
+                        "difficulty": 3,
+                        "instrument": 1,
+                        "stars": 6,
+                        "fullcombo": false
+                    },
+                    "stats": {
+                        "band": {
+                            "accuracy": 96,
+                            "fullcombo": false,
+                            "stars": 5,
+                            "scores": {
+                                "overdrive_bonus": 87398,
+                                "base_score": 373642,
+                                "total": 491864
+                            }
+                        },
+                        "players": [
+                            {
+                                "accuracy": 100,
+                                "score": 260215,
+                                "difficulty": 3,
+                                "instrument": 1,
+                                "fullcombo": false,
+                                "stars": 6,
+                                "is_valid_entry": true
+                            },
+                            {
+                                "accuracy": 92,
+                                "score": 113427,
+                                "difficulty": 2,
+                                "instrument": 0,
+                                "fullcombo": false,
+                                "stars": 4,
+                                "is_valid_entry": false
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "rank": 57,
+            "teamId": "b3b7c62e6a4f40f489b20005af6a7ba1",
+            "userName": "Derieri Z1",
+            "best_run": {
+                "accuracy": 100,
+                "score": 260173,
+                "difficulty": 3,
+                "instrument": 1,
+                "stars": 6,
+                "fullcombo": true
+            },
+            "sessions": [
+                {
+                    "time": 1764908076.77,
+                    "valid": {
+                        "accuracy": 100,
+                        "score": 260173,
+                        "difficulty": 3,
+                        "instrument": 1,
+                        "stars": 6,
+                        "fullcombo": true
+                    },
+                    "stats": {
+                        "band": {
+                            "accuracy": 100,
+                            "fullcombo": true,
+                            "stars": 6,
+                            "scores": {
+                                "overdrive_bonus": 150681,
+                                "base_score": 508487,
+                                "total": 659168
+                            }
+                        },
+                        "players": [
+                            {
+                                "accuracy": 100,
+                                "score": 260173,
+                                "difficulty": 3,
+                                "instrument": 1,
+                                "fullcombo": true,
+                                "stars": 6,
+                                "is_valid_entry": true
+                            },
+                            {
+                                "accuracy": 100,
+                                "score": 248314,
+                                "difficulty": 3,
+                                "instrument": 1,
+                                "fullcombo": true,
+                                "stars": 6,
                                 "is_valid_entry": false
                             }
                         ]
