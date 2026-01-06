@@ -3601,6 +3601,49 @@
             },
             "sessions": [
                 {
+                    "time": 1767691656.806,
+                    "valid": {
+                        "accuracy": 100,
+                        "score": 164664,
+                        "difficulty": 3,
+                        "instrument": 3,
+                        "stars": 6,
+                        "fullcombo": true
+                    },
+                    "stats": {
+                        "band": {
+                            "accuracy": 99,
+                            "fullcombo": false,
+                            "stars": 6,
+                            "scores": {
+                                "overdrive_bonus": 54224,
+                                "base_score": 223736,
+                                "total": 295381
+                            }
+                        },
+                        "players": [
+                            {
+                                "accuracy": 98,
+                                "score": 59072,
+                                "difficulty": 1,
+                                "instrument": 2,
+                                "fullcombo": false,
+                                "stars": 5,
+                                "is_valid_entry": false
+                            },
+                            {
+                                "accuracy": 100,
+                                "score": 164664,
+                                "difficulty": 3,
+                                "instrument": 3,
+                                "fullcombo": true,
+                                "stars": 6,
+                                "is_valid_entry": true
+                            }
+                        ]
+                    }
+                },
+                {
                     "time": 1765705585.545,
                     "valid": {
                         "accuracy": 100,
@@ -3656,8 +3699,8 @@
         },
         {
             "rank": 37,
-            "teamId": "aeb79e38e6bd4e998f1957702c80b28c",
-            "userName": "Loony_Llama",
+            "teamId": "",
+            "userName": "Bilinmeyen",
             "best_run": {
                 "accuracy": 100,
                 "score": 165510,
@@ -3696,7 +3739,7 @@
                                 "instrument": 3,
                                 "fullcombo": false,
                                 "stars": 6,
-                                "is_valid_entry": true
+                                "is_valid_entry": false
                             }
                         ]
                     }
@@ -3730,7 +3773,7 @@
                                 "instrument": 3,
                                 "fullcombo": true,
                                 "stars": 6,
-                                "is_valid_entry": true
+                                "is_valid_entry": false
                             }
                         ]
                     }
