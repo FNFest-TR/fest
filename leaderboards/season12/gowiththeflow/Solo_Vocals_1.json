@@ -262,40 +262,6 @@
             },
             "sessions": [
                 {
-                    "time": 1765662856.821,
-                    "valid": {
-                        "accuracy": 100,
-                        "score": 101182,
-                        "difficulty": 3,
-                        "instrument": 2,
-                        "stars": 6,
-                        "fullcombo": true
-                    },
-                    "stats": {
-                        "band": {
-                            "accuracy": 100,
-                            "fullcombo": true,
-                            "stars": 5,
-                            "scores": {
-                                "overdrive_bonus": 0,
-                                "base_score": 101182,
-                                "total": 101182
-                            }
-                        },
-                        "players": [
-                            {
-                                "accuracy": 100,
-                                "score": 101182,
-                                "difficulty": 3,
-                                "instrument": 2,
-                                "fullcombo": true,
-                                "stars": 6,
-                                "is_valid_entry": true
-                            }
-                        ]
-                    }
-                },
-                {
                     "time": 1765741478.592,
                     "valid": {
                         "accuracy": 100,
@@ -561,6 +527,40 @@
                                 "difficulty": 3,
                                 "instrument": 2,
                                 "fullcombo": true,
+                                "stars": 6,
+                                "is_valid_entry": true
+                            }
+                        ]
+                    }
+                },
+                {
+                    "time": 1767729011.922,
+                    "valid": {
+                        "accuracy": 99,
+                        "score": 97225,
+                        "difficulty": 3,
+                        "instrument": 2,
+                        "stars": 6,
+                        "fullcombo": false
+                    },
+                    "stats": {
+                        "band": {
+                            "accuracy": 99,
+                            "fullcombo": false,
+                            "stars": 5,
+                            "scores": {
+                                "overdrive_bonus": 0,
+                                "base_score": 97225,
+                                "total": 97225
+                            }
+                        },
+                        "players": [
+                            {
+                                "accuracy": 99,
+                                "score": 97225,
+                                "difficulty": 3,
+                                "instrument": 2,
+                                "fullcombo": false,
                                 "stars": 6,
                                 "is_valid_entry": true
                             }
@@ -3653,7 +3653,7 @@
         {
             "rank": 152,
             "teamId": "1b4585be6e64433ba0d08d8cdf09c65f",
-            "userName": "雨とチミとザワえもん",
+            "userName": "雨とチミとざわちん",
             "best_run": {
                 "accuracy": 100,
                 "score": 102896,
