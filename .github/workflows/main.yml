@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       # ÖNEMLİ: İşleri aynı anda değil, sırayla yapar (Rate Limit yememek için)
-      max-parallel: 1
+      max-parallel: 3
       matrix:
         instrument:
           - 'Solo_Guitar'
