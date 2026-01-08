@@ -536,6 +536,58 @@
             },
             "sessions": [
                 {
+                    "time": 1767848230.714,
+                    "valid": {
+                        "accuracy": 100,
+                        "score": 123946,
+                        "difficulty": 3,
+                        "instrument": 2,
+                        "stars": 6,
+                        "fullcombo": true
+                    },
+                    "stats": {
+                        "band": {
+                            "accuracy": 95,
+                            "fullcombo": false,
+                            "stars": 5,
+                            "scores": {
+                                "overdrive_bonus": 124666,
+                                "base_score": 314923,
+                                "total": 465446
+                            }
+                        },
+                        "players": [
+                            {
+                                "accuracy": 100,
+                                "score": 118422,
+                                "difficulty": 3,
+                                "instrument": 2,
+                                "fullcombo": false,
+                                "stars": 6,
+                                "is_valid_entry": false
+                            },
+                            {
+                                "accuracy": 100,
+                                "score": 123946,
+                                "difficulty": 3,
+                                "instrument": 2,
+                                "fullcombo": true,
+                                "stars": 6,
+                                "is_valid_entry": true
+                            },
+                            {
+                                "accuracy": 87,
+                                "score": 72554,
+                                "difficulty": 3,
+                                "instrument": 0,
+                                "fullcombo": false,
+                                "stars": 4,
+                                "is_valid_entry": false
+                            }
+                        ]
+                    }
+                },
+                {
                     "time": 1767421804.674,
                     "valid": {
                         "accuracy": 100,
