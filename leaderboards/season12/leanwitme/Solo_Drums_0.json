@@ -467,6 +467,49 @@
             },
             "sessions": [
                 {
+                    "time": 1767854227.043,
+                    "valid": {
+                        "accuracy": 100,
+                        "score": 107046,
+                        "difficulty": 3,
+                        "instrument": 3,
+                        "stars": 6,
+                        "fullcombo": true
+                    },
+                    "stats": {
+                        "band": {
+                            "accuracy": 99,
+                            "fullcombo": false,
+                            "stars": 6,
+                            "scores": {
+                                "overdrive_bonus": 42144,
+                                "base_score": 212765,
+                                "total": 271981
+                            }
+                        },
+                        "players": [
+                            {
+                                "accuracy": 100,
+                                "score": 107046,
+                                "difficulty": 3,
+                                "instrument": 3,
+                                "fullcombo": true,
+                                "stars": 6,
+                                "is_valid_entry": true
+                            },
+                            {
+                                "accuracy": 99,
+                                "score": 105719,
+                                "difficulty": 3,
+                                "instrument": 2,
+                                "fullcombo": false,
+                                "stars": 6,
+                                "is_valid_entry": false
+                            }
+                        ]
+                    }
+                },
+                {
                     "time": 1764978173.745,
                     "valid": {
                         "accuracy": 100,
@@ -7279,7 +7322,7 @@
         {
             "rank": 100,
             "teamId": "6d0b9986cc0941b38bde1750f0971324",
-            "userName": "Krashiesgd",
+            "userName": "rocketsszx",
             "best_run": {
                 "accuracy": 100,
                 "score": 101916,
