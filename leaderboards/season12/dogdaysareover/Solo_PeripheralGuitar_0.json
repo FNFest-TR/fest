@@ -215,7 +215,7 @@
             "userName": "DCA_EE",
             "best_run": {
                 "accuracy": 100,
-                "score": 320636,
+                "score": 321965,
                 "difficulty": 3,
                 "instrument": 4,
                 "stars": 6,
@@ -284,6 +284,40 @@
                                 "difficulty": 3,
                                 "instrument": 4,
                                 "fullcombo": false,
+                                "stars": 6,
+                                "is_valid_entry": true
+                            }
+                        ]
+                    }
+                },
+                {
+                    "time": 1766193596.608,
+                    "valid": {
+                        "accuracy": 100,
+                        "score": 320636,
+                        "difficulty": 3,
+                        "instrument": 4,
+                        "stars": 6,
+                        "fullcombo": true
+                    },
+                    "stats": {
+                        "band": {
+                            "accuracy": 100,
+                            "fullcombo": true,
+                            "stars": 5,
+                            "scores": {
+                                "overdrive_bonus": 0,
+                                "base_score": 320636,
+                                "total": 320636
+                            }
+                        },
+                        "players": [
+                            {
+                                "accuracy": 100,
+                                "score": 320636,
+                                "difficulty": 3,
+                                "instrument": 4,
+                                "fullcombo": true,
                                 "stars": 6,
                                 "is_valid_entry": true
                             }
@@ -411,10 +445,10 @@
                     }
                 },
                 {
-                    "time": 1766193596.608,
+                    "time": 1768287693.622,
                     "valid": {
                         "accuracy": 100,
-                        "score": 320636,
+                        "score": 321965,
                         "difficulty": 3,
                         "instrument": 4,
                         "stars": 6,
@@ -422,24 +456,33 @@
                     },
                     "stats": {
                         "band": {
-                            "accuracy": 100,
-                            "fullcombo": true,
-                            "stars": 5,
+                            "accuracy": 98,
+                            "fullcombo": false,
+                            "stars": 6,
                             "scores": {
-                                "overdrive_bonus": 0,
-                                "base_score": 320636,
-                                "total": 320636
+                                "overdrive_bonus": 202464,
+                                "base_score": 595417,
+                                "total": 797881
                             }
                         },
                         "players": [
                             {
                                 "accuracy": 100,
-                                "score": 320636,
+                                "score": 321965,
                                 "difficulty": 3,
                                 "instrument": 4,
                                 "fullcombo": true,
                                 "stars": 6,
                                 "is_valid_entry": true
+                            },
+                            {
+                                "accuracy": 97,
+                                "score": 273452,
+                                "difficulty": 3,
+                                "instrument": 4,
+                                "fullcombo": false,
+                                "stars": 6,
+                                "is_valid_entry": false
                             }
                         ]
                     }
