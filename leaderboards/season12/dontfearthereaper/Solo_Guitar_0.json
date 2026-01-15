@@ -471,7 +471,7 @@
         {
             "rank": 4,
             "teamId": "a00825f8177846889b253890272a0574",
-            "userName": "Tolokunukki",
+            "userName": "Imettäjä",
             "best_run": {
                 "accuracy": 100,
                 "score": 272307,
@@ -4639,40 +4639,6 @@
             },
             "sessions": [
                 {
-                    "time": 1764729294.796,
-                    "valid": {
-                        "accuracy": 100,
-                        "score": 263653,
-                        "difficulty": 3,
-                        "instrument": 0,
-                        "stars": 6,
-                        "fullcombo": true
-                    },
-                    "stats": {
-                        "band": {
-                            "accuracy": 100,
-                            "fullcombo": true,
-                            "stars": 5,
-                            "scores": {
-                                "overdrive_bonus": 0,
-                                "base_score": 263653,
-                                "total": 263653
-                            }
-                        },
-                        "players": [
-                            {
-                                "accuracy": 100,
-                                "score": 263653,
-                                "difficulty": 3,
-                                "instrument": 0,
-                                "fullcombo": true,
-                                "stars": 6,
-                                "is_valid_entry": true
-                            }
-                        ]
-                    }
-                },
-                {
                     "time": 1764835229.355,
                     "valid": {
                         "accuracy": 100,
@@ -5021,6 +4987,49 @@
                                 "fullcombo": false,
                                 "stars": 5,
                                 "is_valid_entry": false
+                            }
+                        ]
+                    }
+                },
+                {
+                    "time": 1768394858.034,
+                    "valid": {
+                        "accuracy": 100,
+                        "score": 262852,
+                        "difficulty": 3,
+                        "instrument": 0,
+                        "stars": 6,
+                        "fullcombo": true
+                    },
+                    "stats": {
+                        "band": {
+                            "accuracy": 99,
+                            "fullcombo": false,
+                            "stars": 6,
+                            "scores": {
+                                "overdrive_bonus": 116591,
+                                "base_score": 488527,
+                                "total": 644111
+                            }
+                        },
+                        "players": [
+                            {
+                                "accuracy": 99,
+                                "score": 225671,
+                                "difficulty": 3,
+                                "instrument": 4,
+                                "fullcombo": false,
+                                "stars": 6,
+                                "is_valid_entry": false
+                            },
+                            {
+                                "accuracy": 100,
+                                "score": 262852,
+                                "difficulty": 3,
+                                "instrument": 0,
+                                "fullcombo": true,
+                                "stars": 6,
+                                "is_valid_entry": true
                             }
                         ]
                     }

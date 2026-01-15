@@ -3128,6 +3128,49 @@
             },
             "sessions": [
                 {
+                    "time": 1768386851.645,
+                    "valid": {
+                        "accuracy": 99,
+                        "score": 60336,
+                        "difficulty": 3,
+                        "instrument": 3,
+                        "stars": 6,
+                        "fullcombo": false
+                    },
+                    "stats": {
+                        "band": {
+                            "accuracy": 99,
+                            "fullcombo": false,
+                            "stars": 6,
+                            "scores": {
+                                "overdrive_bonus": 28356,
+                                "base_score": 95651,
+                                "total": 124007
+                            }
+                        },
+                        "players": [
+                            {
+                                "accuracy": 99,
+                                "score": 60336,
+                                "difficulty": 3,
+                                "instrument": 3,
+                                "fullcombo": false,
+                                "stars": 6,
+                                "is_valid_entry": true
+                            },
+                            {
+                                "accuracy": 100,
+                                "score": 35315,
+                                "difficulty": 1,
+                                "instrument": 3,
+                                "fullcombo": true,
+                                "stars": 5,
+                                "is_valid_entry": false
+                            }
+                        ]
+                    }
+                },
+                {
                     "time": 1765792174.497,
                     "valid": {
                         "accuracy": 99,
@@ -3367,7 +3410,7 @@
         {
             "rank": 248,
             "teamId": "cd576620ff114665ac310d5266b17911",
-            "userName": "GoldenGirl ZA",
+            "userName": "Reno ZA",
             "best_run": {
                 "accuracy": 100,
                 "score": 62982,
