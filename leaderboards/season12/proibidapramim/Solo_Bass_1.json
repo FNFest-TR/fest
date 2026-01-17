@@ -179,6 +179,58 @@
             },
             "sessions": [
                 {
+                    "time": 1768617147.425,
+                    "valid": {
+                        "accuracy": 100,
+                        "score": 163905,
+                        "difficulty": 3,
+                        "instrument": 1,
+                        "stars": 6,
+                        "fullcombo": true
+                    },
+                    "stats": {
+                        "band": {
+                            "accuracy": 99,
+                            "fullcombo": false,
+                            "stars": 6,
+                            "scores": {
+                                "overdrive_bonus": 228839,
+                                "base_score": 436940,
+                                "total": 701126
+                            }
+                        },
+                        "players": [
+                            {
+                                "accuracy": 99,
+                                "score": 165516,
+                                "difficulty": 3,
+                                "instrument": 0,
+                                "fullcombo": false,
+                                "stars": 6,
+                                "is_valid_entry": false
+                            },
+                            {
+                                "accuracy": 98,
+                                "score": 107518,
+                                "difficulty": 3,
+                                "instrument": 1,
+                                "fullcombo": false,
+                                "stars": 5,
+                                "is_valid_entry": false
+                            },
+                            {
+                                "accuracy": 100,
+                                "score": 163905,
+                                "difficulty": 3,
+                                "instrument": 1,
+                                "fullcombo": true,
+                                "stars": 6,
+                                "is_valid_entry": true
+                            }
+                        ]
+                    }
+                },
+                {
                     "time": 1767047557.848,
                     "valid": {
                         "accuracy": 100,
@@ -2739,7 +2791,7 @@
         {
             "rank": 145,
             "teamId": "103bae6e326e4a7593e6133463c18094",
-            "userName": "Grimoire Skies Ω",
+            "userName": "Gothic Blake Ω",
             "best_run": {
                 "accuracy": 100,
                 "score": 161794,
