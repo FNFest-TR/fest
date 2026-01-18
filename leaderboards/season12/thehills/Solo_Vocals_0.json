@@ -912,6 +912,49 @@
             },
             "sessions": [
                 {
+                    "time": 1768659291.484,
+                    "valid": {
+                        "accuracy": 100,
+                        "score": 130117,
+                        "difficulty": 3,
+                        "instrument": 2,
+                        "stars": 6,
+                        "fullcombo": false
+                    },
+                    "stats": {
+                        "band": {
+                            "accuracy": 99,
+                            "fullcombo": false,
+                            "stars": 5,
+                            "scores": {
+                                "overdrive_bonus": 27756,
+                                "base_score": 212678,
+                                "total": 257483
+                            }
+                        },
+                        "players": [
+                            {
+                                "accuracy": 100,
+                                "score": 130117,
+                                "difficulty": 3,
+                                "instrument": 2,
+                                "fullcombo": false,
+                                "stars": 6,
+                                "is_valid_entry": true
+                            },
+                            {
+                                "accuracy": 99,
+                                "score": 82560,
+                                "difficulty": 3,
+                                "instrument": 4,
+                                "fullcombo": false,
+                                "stars": 6,
+                                "is_valid_entry": false
+                            }
+                        ]
+                    }
+                },
+                {
                     "time": 1766981333.122,
                     "valid": {
                         "accuracy": 100,
@@ -5548,7 +5591,7 @@
         {
             "rank": 64,
             "teamId": "6c48ebc03da9415c889d33344d6ead16",
-            "userName": "ChinaBufet71",
+            "userName": "anima vesta.",
             "best_run": {
                 "accuracy": 100,
                 "score": 135230,

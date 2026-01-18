@@ -833,13 +833,47 @@
             "userName": "jorge_rockr",
             "best_run": {
                 "accuracy": 100,
-                "score": 238836,
+                "score": 239302,
                 "difficulty": 3,
                 "instrument": 4,
                 "stars": 6,
                 "fullcombo": true
             },
             "sessions": [
+                {
+                    "time": 1765006558.604,
+                    "valid": {
+                        "accuracy": 100,
+                        "score": 238836,
+                        "difficulty": 3,
+                        "instrument": 4,
+                        "stars": 6,
+                        "fullcombo": true
+                    },
+                    "stats": {
+                        "band": {
+                            "accuracy": 100,
+                            "fullcombo": true,
+                            "stars": 5,
+                            "scores": {
+                                "overdrive_bonus": 0,
+                                "base_score": 238837,
+                                "total": 238836
+                            }
+                        },
+                        "players": [
+                            {
+                                "accuracy": 100,
+                                "score": 238836,
+                                "difficulty": 3,
+                                "instrument": 4,
+                                "fullcombo": true,
+                                "stars": 6,
+                                "is_valid_entry": true
+                            }
+                        ]
+                    }
+                },
                 {
                     "time": 1765095691.142,
                     "valid": {
@@ -945,10 +979,10 @@
                     }
                 },
                 {
-                    "time": 1765006558.604,
+                    "time": 1768639436.258,
                     "valid": {
                         "accuracy": 100,
-                        "score": 238836,
+                        "score": 239302,
                         "difficulty": 3,
                         "instrument": 4,
                         "stars": 6,
@@ -956,19 +990,28 @@
                     },
                     "stats": {
                         "band": {
-                            "accuracy": 100,
-                            "fullcombo": true,
-                            "stars": 5,
+                            "accuracy": 99,
+                            "fullcombo": false,
+                            "stars": 6,
                             "scores": {
-                                "overdrive_bonus": 0,
-                                "base_score": 238837,
-                                "total": 238836
+                                "overdrive_bonus": 98915,
+                                "base_score": 413601,
+                                "total": 544819
                             }
                         },
                         "players": [
                             {
+                                "accuracy": 98,
+                                "score": 174299,
+                                "difficulty": 3,
+                                "instrument": 0,
+                                "fullcombo": false,
+                                "stars": 6,
+                                "is_valid_entry": false
+                            },
+                            {
                                 "accuracy": 100,
-                                "score": 238836,
+                                "score": 239302,
                                 "difficulty": 3,
                                 "instrument": 4,
                                 "fullcombo": true,
@@ -5868,7 +5911,7 @@
         {
             "rank": 67,
             "teamId": "3ae611794cf0478c8b2058303ff25039",
-            "userName": "metal_enjoyer08",
+            "userName": "hottopic_emo08",
             "best_run": {
                 "accuracy": 98,
                 "score": 219019,
