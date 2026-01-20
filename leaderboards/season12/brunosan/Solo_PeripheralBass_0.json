@@ -1673,12 +1673,12 @@
             "teamId": "1f0507271b9f4db0894772bc38b7fe59",
             "userName": "yourbeliefs",
             "best_run": {
-                "accuracy": 99,
-                "score": 42786,
-                "difficulty": 3,
+                "accuracy": 100,
+                "score": 43068,
+                "difficulty": 2,
                 "instrument": 5,
-                "stars": 6,
-                "fullcombo": false
+                "stars": 5,
+                "fullcombo": true
             },
             "sessions": [
                 {
@@ -1852,6 +1852,40 @@
                     }
                 },
                 {
+                    "time": 1767452157.722,
+                    "valid": {
+                        "accuracy": 99,
+                        "score": 42786,
+                        "difficulty": 3,
+                        "instrument": 5,
+                        "stars": 6,
+                        "fullcombo": false
+                    },
+                    "stats": {
+                        "band": {
+                            "accuracy": 99,
+                            "fullcombo": false,
+                            "stars": 5,
+                            "scores": {
+                                "overdrive_bonus": 0,
+                                "base_score": 42786,
+                                "total": 42786
+                            }
+                        },
+                        "players": [
+                            {
+                                "accuracy": 99,
+                                "score": 42786,
+                                "difficulty": 3,
+                                "instrument": 5,
+                                "fullcombo": false,
+                                "stars": 6,
+                                "is_valid_entry": true
+                            }
+                        ]
+                    }
+                },
+                {
                     "time": 1767659219.341,
                     "valid": {
                         "accuracy": 100,
@@ -1886,34 +1920,34 @@
                     }
                 },
                 {
-                    "time": 1767452157.722,
+                    "time": 1768852329.898,
                     "valid": {
-                        "accuracy": 99,
-                        "score": 42786,
-                        "difficulty": 3,
+                        "accuracy": 100,
+                        "score": 43068,
+                        "difficulty": 2,
                         "instrument": 5,
-                        "stars": 6,
-                        "fullcombo": false
+                        "stars": 5,
+                        "fullcombo": true
                     },
                     "stats": {
                         "band": {
-                            "accuracy": 99,
-                            "fullcombo": false,
+                            "accuracy": 100,
+                            "fullcombo": true,
                             "stars": 5,
                             "scores": {
                                 "overdrive_bonus": 0,
-                                "base_score": 42786,
-                                "total": 42786
+                                "base_score": 43068,
+                                "total": 43068
                             }
                         },
                         "players": [
                             {
-                                "accuracy": 99,
-                                "score": 42786,
-                                "difficulty": 3,
+                                "accuracy": 100,
+                                "score": 43068,
+                                "difficulty": 2,
                                 "instrument": 5,
-                                "fullcombo": false,
-                                "stars": 6,
+                                "fullcombo": true,
+                                "stars": 5,
                                 "is_valid_entry": true
                             }
                         ]
