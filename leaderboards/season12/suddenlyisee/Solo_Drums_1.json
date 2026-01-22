@@ -583,40 +583,6 @@
             },
             "sessions": [
                 {
-                    "time": 1764615436.62,
-                    "valid": {
-                        "accuracy": 100,
-                        "score": 178740,
-                        "difficulty": 3,
-                        "instrument": 3,
-                        "stars": 6,
-                        "fullcombo": true
-                    },
-                    "stats": {
-                        "band": {
-                            "accuracy": 100,
-                            "fullcombo": true,
-                            "stars": 5,
-                            "scores": {
-                                "overdrive_bonus": 0,
-                                "base_score": 178740,
-                                "total": 178740
-                            }
-                        },
-                        "players": [
-                            {
-                                "accuracy": 100,
-                                "score": 178740,
-                                "difficulty": 3,
-                                "instrument": 3,
-                                "fullcombo": true,
-                                "stars": 6,
-                                "is_valid_entry": true
-                            }
-                        ]
-                    }
-                },
-                {
                     "time": 1765828530.588,
                     "valid": {
                         "accuracy": 100,
@@ -1061,6 +1027,58 @@
                                 "score": 40613,
                                 "difficulty": 1,
                                 "instrument": 2,
+                                "fullcombo": false,
+                                "stars": 5,
+                                "is_valid_entry": false
+                            }
+                        ]
+                    }
+                },
+                {
+                    "time": 1769023756.455,
+                    "valid": {
+                        "accuracy": 99,
+                        "score": 176160,
+                        "difficulty": 3,
+                        "instrument": 3,
+                        "stars": 6,
+                        "fullcombo": false
+                    },
+                    "stats": {
+                        "band": {
+                            "accuracy": 99,
+                            "fullcombo": false,
+                            "stars": 6,
+                            "scores": {
+                                "overdrive_bonus": 153597,
+                                "base_score": 402233,
+                                "total": 623969
+                            }
+                        },
+                        "players": [
+                            {
+                                "accuracy": 99,
+                                "score": 176160,
+                                "difficulty": 3,
+                                "instrument": 3,
+                                "fullcombo": false,
+                                "stars": 6,
+                                "is_valid_entry": true
+                            },
+                            {
+                                "accuracy": 100,
+                                "score": 106006,
+                                "difficulty": 3,
+                                "instrument": 2,
+                                "fullcombo": false,
+                                "stars": 6,
+                                "is_valid_entry": false
+                            },
+                            {
+                                "accuracy": 98,
+                                "score": 120067,
+                                "difficulty": 2,
+                                "instrument": 0,
                                 "fullcombo": false,
                                 "stars": 5,
                                 "is_valid_entry": false
@@ -2931,7 +2949,7 @@
         {
             "rank": 142,
             "teamId": "f29640b479b640ab9002979203a84bd2",
-            "userName": "[PSN] Ludox2002",
+            "userName": "LcsSS21",
             "best_run": {
                 "accuracy": 99,
                 "score": 177186,

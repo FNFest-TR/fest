@@ -293,6 +293,58 @@
             },
             "sessions": [
                 {
+                    "time": 1768972109.228,
+                    "valid": {
+                        "accuracy": 100,
+                        "score": 262063,
+                        "difficulty": 3,
+                        "instrument": 4,
+                        "stars": 6,
+                        "fullcombo": true
+                    },
+                    "stats": {
+                        "band": {
+                            "accuracy": 100,
+                            "fullcombo": true,
+                            "stars": 6,
+                            "scores": {
+                                "overdrive_bonus": 873072,
+                                "base_score": 789060,
+                                "total": 1719062
+                            }
+                        },
+                        "players": [
+                            {
+                                "accuracy": 100,
+                                "score": 262800,
+                                "difficulty": 3,
+                                "instrument": 0,
+                                "fullcombo": true,
+                                "stars": 6,
+                                "is_valid_entry": false
+                            },
+                            {
+                                "accuracy": 100,
+                                "score": 264192,
+                                "difficulty": 3,
+                                "instrument": 0,
+                                "fullcombo": true,
+                                "stars": 6,
+                                "is_valid_entry": false
+                            },
+                            {
+                                "accuracy": 100,
+                                "score": 262063,
+                                "difficulty": 3,
+                                "instrument": 4,
+                                "fullcombo": true,
+                                "stars": 6,
+                                "is_valid_entry": true
+                            }
+                        ]
+                    }
+                },
+                {
                     "time": 1767072862.365,
                     "valid": {
                         "accuracy": 100,
@@ -4932,7 +4984,7 @@
         {
             "rank": 52,
             "teamId": "1215bed2e61b4d8d83c896f779a48dbb",
-            "userName": "North Everglow",
+            "userName": "DomMeValeria",
             "best_run": {
                 "accuracy": 99,
                 "score": 242868,
