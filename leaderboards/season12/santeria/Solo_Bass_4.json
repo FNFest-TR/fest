@@ -817,6 +817,58 @@
             },
             "sessions": [
                 {
+                    "time": 1769212431.926,
+                    "valid": {
+                        "accuracy": 99,
+                        "score": 141961,
+                        "difficulty": 3,
+                        "instrument": 1,
+                        "stars": 6,
+                        "fullcombo": false
+                    },
+                    "stats": {
+                        "band": {
+                            "accuracy": 98,
+                            "fullcombo": false,
+                            "stars": 6,
+                            "scores": {
+                                "overdrive_bonus": 170321,
+                                "base_score": 290403,
+                                "total": 508148
+                            }
+                        },
+                        "players": [
+                            {
+                                "accuracy": 95,
+                                "score": 39162,
+                                "difficulty": 3,
+                                "instrument": 2,
+                                "fullcombo": false,
+                                "stars": 4,
+                                "is_valid_entry": false
+                            },
+                            {
+                                "accuracy": 100,
+                                "score": 109280,
+                                "difficulty": 3,
+                                "instrument": 0,
+                                "fullcombo": true,
+                                "stars": 6,
+                                "is_valid_entry": false
+                            },
+                            {
+                                "accuracy": 99,
+                                "score": 141961,
+                                "difficulty": 3,
+                                "instrument": 1,
+                                "fullcombo": false,
+                                "stars": 6,
+                                "is_valid_entry": true
+                            }
+                        ]
+                    }
+                },
+                {
                     "time": 1765587048.66,
                     "valid": {
                         "accuracy": 100,
@@ -2215,7 +2267,7 @@
         {
             "rank": 435,
             "teamId": "1b23fb8c894b4e3486b120482d02fe36",
-            "userName": "[PSN] Holbach173",
+            "userName": "Holbach173",
             "best_run": {
                 "accuracy": 100,
                 "score": 165271,

@@ -6,13 +6,47 @@
             "userName": "Axolosmo",
             "best_run": {
                 "accuracy": 100,
-                "score": 34471,
+                "score": 34852,
                 "difficulty": 3,
                 "instrument": 1,
                 "stars": 6,
                 "fullcombo": true
             },
             "sessions": [
+                {
+                    "time": 1765682734.396,
+                    "valid": {
+                        "accuracy": 100,
+                        "score": 34471,
+                        "difficulty": 3,
+                        "instrument": 1,
+                        "stars": 6,
+                        "fullcombo": true
+                    },
+                    "stats": {
+                        "band": {
+                            "accuracy": 100,
+                            "fullcombo": true,
+                            "stars": 5,
+                            "scores": {
+                                "overdrive_bonus": 0,
+                                "base_score": 34471,
+                                "total": 34471
+                            }
+                        },
+                        "players": [
+                            {
+                                "accuracy": 100,
+                                "score": 34471,
+                                "difficulty": 3,
+                                "instrument": 1,
+                                "fullcombo": true,
+                                "stars": 6,
+                                "is_valid_entry": true
+                            }
+                        ]
+                    }
+                },
                 {
                     "time": 1765774106.337,
                     "valid": {
@@ -57,10 +91,10 @@
                     }
                 },
                 {
-                    "time": 1765682734.396,
+                    "time": 1769214313.435,
                     "valid": {
                         "accuracy": 100,
-                        "score": 34471,
+                        "score": 34852,
                         "difficulty": 3,
                         "instrument": 1,
                         "stars": 6,
@@ -70,22 +104,31 @@
                         "band": {
                             "accuracy": 100,
                             "fullcombo": true,
-                            "stars": 5,
+                            "stars": 6,
                             "scores": {
-                                "overdrive_bonus": 0,
-                                "base_score": 34471,
-                                "total": 34471
+                                "overdrive_bonus": 37312,
+                                "base_score": 231046,
+                                "total": 286626
                             }
                         },
                         "players": [
                             {
                                 "accuracy": 100,
-                                "score": 34471,
+                                "score": 34852,
                                 "difficulty": 3,
                                 "instrument": 1,
                                 "fullcombo": true,
                                 "stars": 6,
                                 "is_valid_entry": true
+                            },
+                            {
+                                "accuracy": 100,
+                                "score": 196194,
+                                "difficulty": 3,
+                                "instrument": 2,
+                                "fullcombo": true,
+                                "stars": 6,
+                                "is_valid_entry": false
                             }
                         ]
                     }
