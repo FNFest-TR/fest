@@ -437,6 +437,58 @@
             },
             "sessions": [
                 {
+                    "time": 1769438393.293,
+                    "valid": {
+                        "accuracy": 99,
+                        "score": 107122,
+                        "difficulty": 3,
+                        "instrument": 5,
+                        "stars": 6,
+                        "fullcombo": false
+                    },
+                    "stats": {
+                        "band": {
+                            "accuracy": 96,
+                            "fullcombo": false,
+                            "stars": 5,
+                            "scores": {
+                                "overdrive_bonus": 70763,
+                                "base_score": 287067,
+                                "total": 406733
+                            }
+                        },
+                        "players": [
+                            {
+                                "accuracy": 94,
+                                "score": 63192,
+                                "difficulty": 3,
+                                "instrument": 3,
+                                "fullcombo": false,
+                                "stars": 4,
+                                "is_valid_entry": false
+                            },
+                            {
+                                "accuracy": 99,
+                                "score": 107122,
+                                "difficulty": 3,
+                                "instrument": 5,
+                                "fullcombo": false,
+                                "stars": 6,
+                                "is_valid_entry": true
+                            },
+                            {
+                                "accuracy": 96,
+                                "score": 116752,
+                                "difficulty": 3,
+                                "instrument": 2,
+                                "fullcombo": false,
+                                "stars": 5,
+                                "is_valid_entry": false
+                            }
+                        ]
+                    }
+                },
+                {
                     "time": 1769098811.131,
                     "valid": {
                         "accuracy": 100,
@@ -5281,7 +5333,7 @@
         {
             "rank": 75,
             "teamId": "d1ef905a59664f68bdf0b7e39f024e79",
-            "userName": "uncancellable",
+            "userName": "SLAM-piece",
             "best_run": {
                 "accuracy": 99,
                 "score": 93324,
