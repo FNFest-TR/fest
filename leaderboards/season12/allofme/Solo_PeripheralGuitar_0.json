@@ -867,14 +867,48 @@
             "teamId": "dc1918d1270c462396f7a6fc50b08a2d",
             "userName": "ℬℰatniksℰs",
             "best_run": {
-                "accuracy": 99,
-                "score": 162838,
+                "accuracy": 100,
+                "score": 164616,
                 "difficulty": 3,
                 "instrument": 4,
                 "stars": 6,
-                "fullcombo": false
+                "fullcombo": true
             },
             "sessions": [
+                {
+                    "time": 1767180254.863,
+                    "valid": {
+                        "accuracy": 99,
+                        "score": 162838,
+                        "difficulty": 3,
+                        "instrument": 4,
+                        "stars": 6,
+                        "fullcombo": false
+                    },
+                    "stats": {
+                        "band": {
+                            "accuracy": 99,
+                            "fullcombo": false,
+                            "stars": 5,
+                            "scores": {
+                                "overdrive_bonus": 0,
+                                "base_score": 162838,
+                                "total": 162838
+                            }
+                        },
+                        "players": [
+                            {
+                                "accuracy": 99,
+                                "score": 162838,
+                                "difficulty": 3,
+                                "instrument": 4,
+                                "fullcombo": false,
+                                "stars": 6,
+                                "is_valid_entry": true
+                            }
+                        ]
+                    }
+                },
                 {
                     "time": 1767184663.857,
                     "valid": {
@@ -937,33 +971,33 @@
                     }
                 },
                 {
-                    "time": 1767180254.863,
+                    "time": 1769580862.934,
                     "valid": {
-                        "accuracy": 99,
-                        "score": 162838,
+                        "accuracy": 100,
+                        "score": 164616,
                         "difficulty": 3,
                         "instrument": 4,
                         "stars": 6,
-                        "fullcombo": false
+                        "fullcombo": true
                     },
                     "stats": {
                         "band": {
-                            "accuracy": 99,
-                            "fullcombo": false,
+                            "accuracy": 100,
+                            "fullcombo": true,
                             "stars": 5,
                             "scores": {
                                 "overdrive_bonus": 0,
-                                "base_score": 162838,
-                                "total": 162838
+                                "base_score": 164616,
+                                "total": 164616
                             }
                         },
                         "players": [
                             {
-                                "accuracy": 99,
-                                "score": 162838,
+                                "accuracy": 100,
+                                "score": 164616,
                                 "difficulty": 3,
                                 "instrument": 4,
-                                "fullcombo": false,
+                                "fullcombo": true,
                                 "stars": 6,
                                 "is_valid_entry": true
                             }
@@ -4496,6 +4530,55 @@
         },
         {
             "rank": 55,
+            "teamId": "0995b20550844bc6839bcff69a36b28b",
+            "userName": "DogmaticOsperey",
+            "best_run": {
+                "accuracy": 61,
+                "score": 26849,
+                "difficulty": 3,
+                "instrument": 4,
+                "stars": 2,
+                "fullcombo": false
+            },
+            "sessions": [
+                {
+                    "time": 1769583942.074,
+                    "valid": {
+                        "accuracy": 61,
+                        "score": 26849,
+                        "difficulty": 3,
+                        "instrument": 4,
+                        "stars": 2,
+                        "fullcombo": false
+                    },
+                    "stats": {
+                        "band": {
+                            "accuracy": 61,
+                            "fullcombo": false,
+                            "stars": 1,
+                            "scores": {
+                                "overdrive_bonus": 0,
+                                "base_score": 26849,
+                                "total": 26849
+                            }
+                        },
+                        "players": [
+                            {
+                                "accuracy": 61,
+                                "score": 26849,
+                                "difficulty": 3,
+                                "instrument": 4,
+                                "fullcombo": false,
+                                "stars": 2,
+                                "is_valid_entry": true
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "rank": 56,
             "teamId": "3f30d093feb847fdb197f9b542663922",
             "userName": "RacingRoyale",
             "best_run": {
@@ -4553,7 +4636,7 @@
             ]
         },
         {
-            "rank": 56,
+            "rank": 57,
             "teamId": "da067368859a41168cad37135ea20e01",
             "userName": "ツjimjim",
             "best_run": {
@@ -4602,7 +4685,7 @@
             ]
         },
         {
-            "rank": 57,
+            "rank": 58,
             "teamId": "25d486a995c545fbb2d5bd6980e463e9",
             "userName": "Teffynator",
             "best_run": {
