@@ -1198,12 +1198,12 @@
             "teamId": "b7efd4f7e5a5461d82b94c82ca0c94a8",
             "userName": "stw_orca",
             "best_run": {
-                "accuracy": 99,
-                "score": 160704,
+                "accuracy": 100,
+                "score": 161028,
                 "difficulty": 3,
                 "instrument": 3,
                 "stars": 6,
-                "fullcombo": false
+                "fullcombo": true
             },
             "sessions": [
                 {
@@ -1252,6 +1252,40 @@
                                 "difficulty": 3,
                                 "instrument": 3,
                                 "fullcombo": false,
+                                "stars": 6,
+                                "is_valid_entry": true
+                            }
+                        ]
+                    }
+                },
+                {
+                    "time": 1769660457.687,
+                    "valid": {
+                        "accuracy": 100,
+                        "score": 161028,
+                        "difficulty": 3,
+                        "instrument": 3,
+                        "stars": 6,
+                        "fullcombo": true
+                    },
+                    "stats": {
+                        "band": {
+                            "accuracy": 100,
+                            "fullcombo": true,
+                            "stars": 5,
+                            "scores": {
+                                "overdrive_bonus": 0,
+                                "base_score": 161028,
+                                "total": 161028
+                            }
+                        },
+                        "players": [
+                            {
+                                "accuracy": 100,
+                                "score": 161028,
+                                "difficulty": 3,
+                                "instrument": 3,
+                                "fullcombo": true,
                                 "stars": 6,
                                 "is_valid_entry": true
                             }
