@@ -3390,7 +3390,7 @@
         {
             "rank": 40,
             "teamId": "1b4585be6e64433ba0d08d8cdf09c65f",
-            "userName": "雨とチミとざわちん",
+            "userName": "雨とチミとざわこ",
             "best_run": {
                 "accuracy": 100,
                 "score": 167646,
@@ -3625,7 +3625,7 @@
         {
             "rank": 43,
             "teamId": "dd8c6e9fdc7a4157ae002fe5b31930c5",
-            "userName": "Yuki Loser",
+            "userName": "Sentinel Praetor",
             "best_run": {
                 "accuracy": 100,
                 "score": 167568,
@@ -4736,40 +4736,6 @@
             },
             "sessions": [
                 {
-                    "time": 1767288647.792,
-                    "valid": {
-                        "accuracy": 100,
-                        "score": 164946,
-                        "difficulty": 3,
-                        "instrument": 3,
-                        "stars": 6,
-                        "fullcombo": true
-                    },
-                    "stats": {
-                        "band": {
-                            "accuracy": 100,
-                            "fullcombo": true,
-                            "stars": 5,
-                            "scores": {
-                                "overdrive_bonus": 0,
-                                "base_score": 164946,
-                                "total": 164946
-                            }
-                        },
-                        "players": [
-                            {
-                                "accuracy": 100,
-                                "score": 164946,
-                                "difficulty": 3,
-                                "instrument": 3,
-                                "fullcombo": true,
-                                "stars": 6,
-                                "is_valid_entry": true
-                            }
-                        ]
-                    }
-                },
-                {
                     "time": 1767294630.873,
                     "valid": {
                         "accuracy": 100,
@@ -5046,6 +5012,49 @@
                                 "fullcombo": false,
                                 "stars": 6,
                                 "is_valid_entry": true
+                            }
+                        ]
+                    }
+                },
+                {
+                    "time": 1769823773.617,
+                    "valid": {
+                        "accuracy": 100,
+                        "score": 166098,
+                        "difficulty": 3,
+                        "instrument": 3,
+                        "stars": 6,
+                        "fullcombo": true
+                    },
+                    "stats": {
+                        "band": {
+                            "accuracy": 99,
+                            "fullcombo": false,
+                            "stars": 6,
+                            "scores": {
+                                "overdrive_bonus": 68444,
+                                "base_score": 265972,
+                                "total": 356137
+                            }
+                        },
+                        "players": [
+                            {
+                                "accuracy": 100,
+                                "score": 166098,
+                                "difficulty": 3,
+                                "instrument": 3,
+                                "fullcombo": true,
+                                "stars": 6,
+                                "is_valid_entry": true
+                            },
+                            {
+                                "accuracy": 99,
+                                "score": 99874,
+                                "difficulty": 3,
+                                "instrument": 0,
+                                "fullcombo": false,
+                                "stars": 5,
+                                "is_valid_entry": false
                             }
                         ]
                     }
