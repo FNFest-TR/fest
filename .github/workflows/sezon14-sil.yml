@@ -1,0 +1,70 @@
+name: Sezon 14'u Tamamen Sil
+
+on:
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  sil:
+    name: season14 temizligi
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: season14'u sil ve gecmisi sifirla
+        run: |
+          git config --global user.name "Onur Ekici"
+          git config --global user.email "onurekicki@users.noreply.github.com"
+          git config --global http.postBuffer 2097152000
+          git config --global core.compression 9
+
+          # 1) Klasoru diskten sil
+          rm -rf leaderboards/season14
+          echo "Kalan sezonlar:"; ls leaderboards/ || true
+
+          # 2) Gecmisi olmayan yeni dal: season14 hicbir commit'te kalmaz
+          git checkout --orphan gecici_dal
+          git rm -r --cached . -q || true
+          git branch -D main || true
+          git branch -m main
+
+          # 3) Temel dosyalar
+          git add .github/ actions.py season.json setlists.py songs/ requirements.txt README.md .gitignore || true
+          git commit -m "Temel repo dosyalari (season14 silindi)"
+          git push origin main --force
+
+          # 4) Kalan sezonlari parca parca yukle (buyuk push hatasini onlemek icin)
+          count=0
+          for season_dir in leaderboards/*; do
+            [ -d "$season_dir" ] || continue
+            for item in "$season_dir"/*; do
+              git add "$item"
+              count=$((count+1))
+              if [ $count -eq 40 ]; then
+                if ! git diff --staged --quiet; then
+                  git commit -m "Skorlar (Parca)"
+                  git push origin main
+                fi
+                count=0
+              fi
+            done
+          done
+          git add leaderboards/ || true
+          if ! git diff --staged --quiet; then
+            git commit -m "Skorlar (Son Parca)"
+            git push origin main
+          fi
+
+          # 5) Kontrol
+          if git ls-tree -r --name-only HEAD | grep -q '^leaderboards/season14/'; then
+            echo "HATA: season14 hala commit icinde!"; exit 1
+          fi
+          echo "✅ season14 main dalindan ve gecmisten tamamen kaldirildi."
